@@ -1,0 +1,10 @@
+public enum TypesOfCells {
+    STARTINGPOINT,
+    SVISLA,
+    VODOROVNA,
+    ZEZHORADOPRAVA,
+    ZAZHORADOLEVA,
+    ZEZDOLADOPRAVA,
+    ZEZDOLADOLEVA,
+    BLANK,
+}
