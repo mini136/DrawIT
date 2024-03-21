@@ -19,5 +19,6 @@ public class Render extends JFrame {
         }
 
         setVisible(true);
+
     }
 }

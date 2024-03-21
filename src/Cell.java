@@ -28,7 +28,7 @@ public class Cell extends JLabel {
 
            @Override
            public void mouseEntered(MouseEvent e) {
-
+                 setTypeOfCell(TypesOfCells.SVISLA);
            }
 
            @Override
@@ -51,16 +51,7 @@ public class Cell extends JLabel {
             case ZEZDOLADOLEVA -> setIcon(new ImageIcon("pictures/zeZdolaVlevo.png"));
             case ZEZDOLADOPRAVA -> setIcon(new ImageIcon("pictures/zeZdolaVpravo.png"));
         }
-        switch(typeOfCell){
-            case BLANK -> setType(TypesOfCells.BLANK);
-            case STARTINGPOINT -> setType(TypesOfCells.STARTINGPOINT);
-            case SVISLA -> setType(TypesOfCells.SVISLA);
-            case VODOROVNA -> setType(TypesOfCells.VODOROVNA);
-            case ZEZHORADOPRAVA -> setType(TypesOfCells.ZEZHORADOPRAVA);
-            case ZEZHORADOLEVA -> setType(TypesOfCells.ZEZHORADOLEVA);
-            case ZEZDOLADOLEVA -> setType(TypesOfCells.ZEZDOLADOLEVA);
-            case ZEZDOLADOPRAVA -> setType(TypesOfCells.ZEZDOLADOPRAVA);
-        }
+       setType(typeOfCell);
     }
 
     public void getTypeOfCell(){
