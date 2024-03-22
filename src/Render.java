@@ -7,6 +7,7 @@ public class Render extends JFrame {
 
     public Render() {
 
+        Zadani zadani = new Zadani();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBackground(Color.WHITE);
         setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
@@ -18,7 +19,16 @@ public class Render extends JFrame {
             add(cell);
         }
 
-        setVisible(true);
+        while(true){
+            if(!zadani.getVisibility()){
+                setVisible(true);
+                break;
+            }
+        }
 
+    }
+
+    public void setVisible(){
+        setVisible(true);
     }
 }
