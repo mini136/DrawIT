@@ -9,7 +9,7 @@ public class Cell extends JLabel {
     public Cell(){
        setBackground(Color.white);
        setText("");
-       addMouseListener(new MouseListener() {
+      /* addMouseListener(new MouseListener() {
 
            @Override
            public void mouseClicked(MouseEvent e) {
@@ -35,7 +35,7 @@ public class Cell extends JLabel {
            public void mouseExited(MouseEvent e) {
 
            }
-       });
+       });*/
     }
 
 

@@ -25,6 +25,7 @@ public class Zadani extends JFrame {
         text.setFont(new Font("Serif", Font.BOLD, 24));
         zadani = "";
 
+
         GridBagConstraints g = new GridBagConstraints();
 
         up.addActionListener(new ActionListener() {
@@ -103,6 +104,9 @@ public class Zadani extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 visible = false;
                 dispose();
+                Render render = new Render();
+
+
             }
         });
 
