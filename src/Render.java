@@ -66,7 +66,14 @@ public class Render extends JFrame {
                 super.mouseMoved(e);
                 int x = e.getX();
                 int y = e.getY();
-                System.out.println(x + "  " + y);
+
+                int okynkoX = e.getX() / (artBox.getWidth() / rowsAndColumms);
+                int okynkoY = e.getY() / (artBox.getHeight() / rowsAndColumms);
+
+                int pocetOkynek = okynkoX * rowsAndColumms + okynkoY;
+
+
+                System.out.println(pocetOkynek);
             }
         });
 
