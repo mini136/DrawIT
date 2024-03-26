@@ -6,36 +6,11 @@ import java.awt.event.MouseListener;
 public class Cell extends JLabel {
 
     private TypesOfCells type;
-    public Cell(){
+    private boolean startingPoint;
+    public Cell(boolean startingPoint){
+        setStartingPoint(startingPoint);
        setBackground(Color.white);
        setText("");
-      /* addMouseListener(new MouseListener() {
-
-           @Override
-           public void mouseClicked(MouseEvent e) {
-
-           }
-
-           @Override
-           public void mousePressed(MouseEvent e) {
-
-           }
-
-           @Override
-           public void mouseReleased(MouseEvent e) {
-
-           }
-
-           @Override
-           public void mouseEntered(MouseEvent e) {
-                 setTypeOfCell(TypesOfCells.SVISLA);
-           }
-
-           @Override
-           public void mouseExited(MouseEvent e) {
-
-           }
-       });*/
     }
 
 
@@ -64,5 +39,13 @@ public class Cell extends JLabel {
 
     public void setType(TypesOfCells type) {
         this.type = type;
+    }
+
+    public boolean isStartingPoint() {
+        return startingPoint;
+    }
+
+    public void setStartingPoint(boolean startingPoint) {
+        this.startingPoint = startingPoint;
     }
 }

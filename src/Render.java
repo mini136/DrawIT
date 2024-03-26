@@ -1,13 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 
 public class Render extends JFrame {
 
     int rowsAndColumms = 10;
     private Component[] components;
+
+    private Cell startingCell;
+
+    private int pocetOkynek;
 
     public Render() {
         JPanel artBox = new JPanel();
@@ -54,7 +56,7 @@ public class Render extends JFrame {
         setupBox.add(done,g);
 
         for (int i = 0;i < rowsAndColumms * rowsAndColumms;i++){
-            Cell cell = new Cell();
+            Cell cell = new Cell(false);
             artBox.add(cell);
         }
 
@@ -70,17 +72,34 @@ public class Render extends JFrame {
                 int okynkoX = e.getX() / (artBox.getWidth() / rowsAndColumms);
                 int okynkoY = e.getY() / (artBox.getHeight() / rowsAndColumms);
 
-                int pocetOkynek = okynkoX * rowsAndColumms + okynkoY;
-
+                pocetOkynek = okynkoX * rowsAndColumms + okynkoY;
 
                 System.out.println(pocetOkynek);
+
+
+            }
+        });
+
+        artBox.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(startingCell == null){
+                startingCell = new Cell(true);
+                components[pocetOkynek].
+            }
             }
         });
 
         add(artBox);
         add(setupBox);
-        setVisible(true);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                moveMouseToCenter();
+            }
+        });
+        setVisible(true);
 
 
 
@@ -90,5 +109,16 @@ public class Render extends JFrame {
         setVisible(true);
     }
 
+    private void moveMouseToCenter() {
+        try {
+            Robot robot = new Robot();
+            Point location = getLocationOnScreen();
+            int centerX = location.x + getWidth() / 2;
+            int centerY = location.y + getHeight() / 2;
+            robot.mouseMove(centerX, centerY);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
