@@ -9,6 +9,7 @@ public class Render extends JFrame {
 
     private Cell startingCell;
 
+    private Cell[][] labels = new Cell[rowsAndColumms][rowsAndColumms];
     private int pocetOkynek;
 
     public Render() {
@@ -19,8 +20,7 @@ public class Render extends JFrame {
         setSize(new Dimension(rowsAndColumms * 100,(rowsAndColumms + ((rowsAndColumms / 100)*10)) * 100));
         setResizable(false);
 
-        artBox.setBackground(Color.BLACK);
-        artBox.setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
+        artBox.setLayout(new GridBagLayout());
         artBox.setSize(new Dimension(rowsAndColumms * 100,rowsAndColumms * 100));
 
         setupBox.setSize(new Dimension(rowsAndColumms * 100,((rowsAndColumms / 100)*10)));
@@ -55,9 +55,24 @@ public class Render extends JFrame {
 
         setupBox.add(done,g);
 
-        for (int i = 0;i < rowsAndColumms * rowsAndColumms;i++){
-            Cell cell = new Cell(false);
-            artBox.add(cell);
+        for (int i = 0;i < rowsAndColumms;i++){
+            for (int n = 0;n < rowsAndColumms;n++) {
+                GridBagConstraints gc = new GridBagConstraints();
+                gc.weightx = 0.0;
+                gc.weighty = 0.0;
+
+                gc.gridx = i;
+                gc.gridy = n;
+
+                gc.fill = GridBagConstraints.BOTH;
+                gc.insets = new Insets(0,0,0,0);
+
+                Cell cell = new Cell(false);
+                cell.setSize(new Dimension(100,100));
+                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                labels[i][n] = cell;
+                artBox.add(cell,gc);
+            }
         }
 
         this.components = getComponents();
@@ -74,9 +89,18 @@ public class Render extends JFrame {
 
                 pocetOkynek = okynkoX * rowsAndColumms + okynkoY;
 
+                labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNA);
+
+                GridBagConstraints gc = new GridBagConstraints();
+                gc.weightx = 1;
+                gc.weighty = 1;
+
+                gc.gridx = okynkoX;
+                gc.gridy = okynkoY;
+
+                gc.fill = GridBagConstraints.BOTH;
+
                 System.out.println(pocetOkynek);
-
-
             }
         });
 
@@ -85,7 +109,6 @@ public class Render extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if(startingCell == null){
                 startingCell = new Cell(true);
-                components[pocetOkynek].
             }
             }
         });
