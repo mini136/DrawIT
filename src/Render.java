@@ -11,6 +11,9 @@ public class Render extends JFrame {
 
     private Cell[][] labels = new Cell[rowsAndColumms][rowsAndColumms];
     private int pocetOkynek;
+    private int okynkoXold = 0;
+    private int okynkoYold = 0;
+
 
     public Render() {
         JPanel artBox = new JPanel();
@@ -58,14 +61,14 @@ public class Render extends JFrame {
         for (int i = 0;i < rowsAndColumms;i++){
             for (int n = 0;n < rowsAndColumms;n++) {
                 GridBagConstraints gc = new GridBagConstraints();
-                gc.weightx = 0.0;
-                gc.weighty = 0.0;
+
+                gc.weightx = 1;
+                gc.weighty = 1;
 
                 gc.gridx = i;
                 gc.gridy = n;
 
                 gc.fill = GridBagConstraints.BOTH;
-                gc.insets = new Insets(0,0,0,0);
 
                 Cell cell = new Cell(false);
                 cell.setSize(new Dimension(100,100));
@@ -77,6 +80,7 @@ public class Render extends JFrame {
 
         this.components = getComponents();
 
+
         artBox.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -87,11 +91,29 @@ public class Render extends JFrame {
                 int okynkoX = e.getX() / (artBox.getWidth() / rowsAndColumms);
                 int okynkoY = e.getY() / (artBox.getHeight() / rowsAndColumms);
 
+
+
                 pocetOkynek = okynkoX * rowsAndColumms + okynkoY;
 
-                labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNA);
+                if (okynkoYold == (okynkoY - 1)) {
+
+                    switch (labels[okynkoX][okynkoY].getType()){
+                        case SVISLA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLA);
+                        case VODOROVNA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLA);
+                    }
+                } else if(okynkoYold == (okynkoY + 1)) {
+                    labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLA);
+                } else if(okynkoXold == (okynkoX - 1) || okynkoXold == (okynkoX + 1)){
+                    labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNA);
+                } else if(okynkoXold == 0 && okynkoYold == 0){
+                    labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.STARTINGPOINT);
+                }
+
+                okynkoYold = okynkoY;
+                okynkoXold = okynkoX;
 
                 GridBagConstraints gc = new GridBagConstraints();
+
                 gc.weightx = 1;
                 gc.weighty = 1;
 
@@ -113,8 +135,23 @@ public class Render extends JFrame {
             }
         });
 
+
+        GridBagConstraints g2 = new GridBagConstraints();
+
+        g2.gridx = 2;
+        g2.gridy = 1;
+
+        g2.gridheight = 1000;
+        g2.gridwidth = 1000;
+
         add(artBox);
-        add(setupBox);
+
+        g2.gridx = 2;
+        g2.gridy = 2;
+
+        g2.gridheight = 100;
+        g2.gridwidth = 100;
+      //  add(setupBox,g2);
 
         addWindowListener(new WindowAdapter() {
             @Override
