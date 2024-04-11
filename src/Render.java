@@ -98,13 +98,25 @@ public class Render extends JFrame {
                 if (okynkoYold == (okynkoY - 1)) {
 
                     switch (labels[okynkoX][okynkoY].getType()){
-                        case SVISLA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLA);
-                        case VODOROVNA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLA);
+                        case STARTINGPOINT -> {
+                        }
+                        case SVISLAZEZHORA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
+                        case SVISLAZEZDOLA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                        case VODOROVNAZLEVA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOLEVA);
+                            break;
+                        }
+                        case VODOROVNAZPRAVA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOPRAVA);
+                            break;
+                        }
                     }
                 } else if(okynkoYold == (okynkoY + 1)) {
-                    labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLA);
+                    labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
                 } else if(okynkoXold == (okynkoX - 1) || okynkoXold == (okynkoX + 1)){
-                    labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNA);
+                    labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
                 } else if(okynkoXold == 0 && okynkoYold == 0){
                     labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.STARTINGPOINT);
                 }

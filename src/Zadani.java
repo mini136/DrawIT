@@ -28,14 +28,14 @@ public class Zadani extends JFrame {
 
         GridBagConstraints g = new GridBagConstraints();
 
-        up.addActionListener(new ActionListener() {
+    /*    up.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 zadani += "↑,";
                 types.add(TypesOfCells.SVISLA);
                 text.setText(zadani);
             }
-        });
+        });     */
 
         g.gridx = 1;
         g.gridy = 1;
@@ -47,42 +47,42 @@ public class Zadani extends JFrame {
 
         add(up,g);
 
-        down.addActionListener(new ActionListener() {
+     /*   down.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 zadani += "↓,";
                 types.add(TypesOfCells.SVISLA);
                 text.setText(zadani);
             }
-        });
+        });         */
 
         g.gridx = 2;
         g.gridy = 1;
 
         add(down,g);
 
-        left.addActionListener(new ActionListener() {
+     /*   left.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 zadani += "←,";
                 types.add(TypesOfCells.VODOROVNA);
                 text.setText(zadani);
             }
-        });
+        });*/
 
         g.gridx = 3;
         g.gridy = 1;
 
         add(left,g);
 
-        right.addActionListener(new ActionListener() {
+     /*   right.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 zadani += "→,";
                 types.add(TypesOfCells.VODOROVNA);
                 text.setText(zadani);
             }
-        });
+        }); */
 
         g.gridx = 4;
         g.gridy = 1;
