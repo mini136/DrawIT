@@ -97,11 +97,11 @@ public class Render extends JFrame {
 
                 if (okynkoYold == (okynkoY - 1)) {
 
-                    switch (labels[okynkoX][okynkoY].getType()){
+                    switch (labels[okynkoXold][okynkoYold].getType()){
                         case STARTINGPOINT -> {
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
                         }
                         case SVISLAZEZHORA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
-                        case SVISLAZEZDOLA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
                         case VODOROVNAZLEVA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOLEVA);
@@ -114,25 +114,66 @@ public class Render extends JFrame {
                         }
                     }
                 } else if(okynkoYold == (okynkoY + 1)) {
-                    labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
-                } else if(okynkoXold == (okynkoX - 1) || okynkoXold == (okynkoX + 1)){
-                    labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
-                } else if(okynkoXold == 0 && okynkoYold == 0){
+                    switch (labels[okynkoXold][okynkoYold].getType()){
+                        case STARTINGPOINT -> {
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                        }
+                        case SVISLAZEZDOLA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                        case VODOROVNAZLEVA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOLEVA);
+                            break;
+                        }
+                        case VODOROVNAZPRAVA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOPRAVA);
+                            break;
+                        }
+                    }
+                } else if(okynkoXold == (okynkoX - 1)){
+                    switch (labels[okynkoXold][okynkoYold].getType()){
+                        case STARTINGPOINT -> {
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                        }
+                        case VODOROVNAZLEVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                        case SVISLAZEZHORA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOPRAVA);
+                            break;
+                        }
+                        case SVISLAZEZDOLA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOPRAVA);
+                            break;
+                        }
+                    }
+                } else if(okynkoXold == (okynkoX + 1)){
+                    labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                    switch (labels[okynkoXold][okynkoYold].getType()){
+                        case STARTINGPOINT -> {
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                        }
+                        case VODOROVNAZPRAVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                        case SVISLAZEZHORA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOLEVA);
+                            break;
+                        }
+                        case SVISLAZEZDOLA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOLEVA);
+                            break;
+                        }
+                    }
+                } else if(labels[okynkoX][okynkoY].getType() == null){
                     labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.STARTINGPOINT);
                 }
 
+                System.out.println("OldX: " + okynkoXold + " OldY: " + okynkoYold);
+                System.out.println("X: " + okynkoX + " Y: " + okynkoY);
+
                 okynkoYold = okynkoY;
                 okynkoXold = okynkoX;
-
-                GridBagConstraints gc = new GridBagConstraints();
-
-                gc.weightx = 1;
-                gc.weighty = 1;
-
-                gc.gridx = okynkoX;
-                gc.gridy = okynkoY;
-
-                gc.fill = GridBagConstraints.BOTH;
 
                 System.out.println(pocetOkynek);
             }
