@@ -17,7 +17,7 @@ public class Cell extends JLabel {
 
     public void setTypeOfCell(TypesOfCells typeOfCell){
         switch(typeOfCell){
-            case BLANK -> setIcon(null);
+            case BLANK -> setIcon(new ImageIcon("pictures/BLANK.png"));
             case STARTINGPOINT -> setIcon(new ImageIcon("pictures/startingPoint.png"));
             case SVISLAZEZHORA, SVISLAZEZDOLA -> setIcon(new ImageIcon("pictures/svislaCara.png"));
             case VODOROVNAZLEVA, VODOROVNAZPRAVA -> setIcon(new ImageIcon("pictures/vodorovnaCara.png"));

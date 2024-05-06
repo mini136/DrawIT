@@ -6,9 +6,7 @@ public class Render extends JFrame {
 
     int rowsAndColumms = 10;
     private Component[] components;
-
     private Cell startingCell;
-
     private Cell[][] labels = new Cell[rowsAndColumms][rowsAndColumms];
     private int pocetOkynek;
     private int okynkoXold = 0;
@@ -18,13 +16,15 @@ public class Render extends JFrame {
     public Render() {
         JPanel artBox = new JPanel();
         JPanel setupBox = new JPanel();
+        JPanel mainPanel = new JPanel();
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(new Dimension(rowsAndColumms * 100,(rowsAndColumms + ((rowsAndColumms / 100)*10)) * 100));
+        setLayout(new BorderLayout());
         setResizable(false);
 
-        artBox.setLayout(new GridBagLayout());
         artBox.setSize(new Dimension(rowsAndColumms * 100,rowsAndColumms * 100));
+        artBox.setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
 
         setupBox.setSize(new Dimension(rowsAndColumms * 100,((rowsAndColumms / 100)*10)));
         setupBox.setLayout(new GridBagLayout());
@@ -48,6 +48,8 @@ public class Render extends JFrame {
 
         JButton done = new JButton();
 
+        done.setSize(new Dimension(500,100));
+
         g.gridx = 3;
         g.gridy = 1;
 
@@ -58,25 +60,6 @@ public class Render extends JFrame {
 
         setupBox.add(done,g);
 
-        for (int i = 0;i < rowsAndColumms;i++){
-            for (int n = 0;n < rowsAndColumms;n++) {
-                GridBagConstraints gc = new GridBagConstraints();
-
-                gc.weightx = 1;
-                gc.weighty = 1;
-
-                gc.gridx = i;
-                gc.gridy = n;
-
-                gc.fill = GridBagConstraints.BOTH;
-
-                Cell cell = new Cell(false);
-                cell.setSize(new Dimension(100,100));
-                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                labels[i][n] = cell;
-                artBox.add(cell,gc);
-            }
-        }
 
         this.components = getComponents();
 
@@ -88,20 +71,20 @@ public class Render extends JFrame {
                 int x = e.getX();
                 int y = e.getY();
 
-                int okynkoX = e.getX() / (artBox.getWidth() / rowsAndColumms);
-                int okynkoY = e.getY() / (artBox.getHeight() / rowsAndColumms);
+                int okynkoY = (e.getX() / (artBox.getWidth() / rowsAndColumms));
+                int okynkoX = (e.getY() / (artBox.getHeight() / rowsAndColumms));
 
 
 
                 pocetOkynek = okynkoX * rowsAndColumms + okynkoY;
 
-                if (okynkoYold == (okynkoY - 1)) {
+                if (okynkoXold == (okynkoX - 1)) {
 
                     switch (labels[okynkoXold][okynkoYold].getType()){
                         case STARTINGPOINT -> {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
                         }
-                        case SVISLAZEZHORA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
+                        case SVISLAZEZHORA, ZEZDOLADOLEVA, ZEZDOLADOPRAVA, ZEZHORADOLEVA, ZEZHORADOPRAVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
                         case VODOROVNAZLEVA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOLEVA);
@@ -112,13 +95,17 @@ public class Render extends JFrame {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOPRAVA);
                             break;
                         }
+                        case BLANK -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
+                            break;
+                        }
                     }
-                } else if(okynkoYold == (okynkoY + 1)) {
+                } else if(okynkoXold == (okynkoX + 1)) {
                     switch (labels[okynkoXold][okynkoYold].getType()){
                         case STARTINGPOINT -> {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
                         }
-                        case SVISLAZEZDOLA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                        case SVISLAZEZDOLA, ZEZDOLADOLEVA, ZEZDOLADOPRAVA, ZEZHORADOLEVA, ZEZHORADOPRAVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
                         case VODOROVNAZLEVA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOLEVA);
@@ -129,15 +116,19 @@ public class Render extends JFrame {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOPRAVA);
                             break;
                         }
+                        case BLANK -> {
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                            break;
+                        }
                     }
-                } else if(okynkoXold == (okynkoX - 1)){
+                } else if(okynkoYold == (okynkoY - 1)){
                     switch (labels[okynkoXold][okynkoYold].getType()){
                         case STARTINGPOINT -> {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
                         }
-                        case VODOROVNAZLEVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                        case VODOROVNAZLEVA,ZEZDOLADOLEVA,ZEZDOLADOPRAVA,ZEZHORADOLEVA,ZEZHORADOPRAVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
                         case SVISLAZEZHORA -> {
-                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOPRAVA);
                             break;
                         }
@@ -146,14 +137,18 @@ public class Render extends JFrame {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOPRAVA);
                             break;
                         }
+                        case BLANK -> {
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                            break;
+                        }
                     }
-                } else if(okynkoXold == (okynkoX + 1)){
+                } else if(okynkoYold == (okynkoY + 1)){
                     labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
                     switch (labels[okynkoXold][okynkoYold].getType()){
                         case STARTINGPOINT -> {
-                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
                         }
-                        case VODOROVNAZPRAVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                        case VODOROVNAZPRAVA,ZEZDOLADOLEVA,ZEZDOLADOPRAVA,ZEZHORADOLEVA,ZEZHORADOPRAVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
                         case SVISLAZEZHORA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOLEVA);
@@ -162,6 +157,10 @@ public class Render extends JFrame {
                         case SVISLAZEZDOLA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOLEVA);
+                            break;
+                        }
+                        case BLANK -> {
+                            labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
                             break;
                         }
                     }
@@ -191,20 +190,20 @@ public class Render extends JFrame {
 
         GridBagConstraints g2 = new GridBagConstraints();
 
-        g2.gridx = 2;
+        g2.gridx = 1;
         g2.gridy = 1;
 
         g2.gridheight = 1000;
         g2.gridwidth = 1000;
 
-        add(artBox);
+        add(artBox,BorderLayout.CENTER);
 
         g2.gridx = 2;
         g2.gridy = 2;
 
         g2.gridheight = 100;
-        g2.gridwidth = 100;
-      //  add(setupBox,g2);
+        g2.gridwidth = 1000;
+        add(setupBox,BorderLayout.SOUTH);
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -214,7 +213,27 @@ public class Render extends JFrame {
         });
         setVisible(true);
 
+        for (int i = 0;i < rowsAndColumms;i++){
+            for (int n = 0;n < rowsAndColumms;n++) {
+                GridBagConstraints gc = new GridBagConstraints();
 
+                gc.weightx = 1;
+                gc.weighty = 1;
+
+                gc.gridx = i;
+                gc.gridy = n;
+
+                gc.fill = GridBagConstraints.CENTER;
+
+                Cell cell = new Cell(false);
+                cell.setSize(new Dimension(100,100));
+                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                cell.setType(TypesOfCells.BLANK);
+                cell.setText(i + " " + n);
+                labels[i][n] = cell;
+                artBox.add(cell);
+            }
+        }
 
     }
 
