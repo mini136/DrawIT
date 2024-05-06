@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="eu.l.space.types_3" type="repository">
+    <properties maven-id="eu.l-space:types_3:0.1.2" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/eu/l-space/types_3/0.1.2/types_3-0.1.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala3-library_3/3.0.1/scala3-library_3-3.0.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.13.6/scala-library-2.13.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

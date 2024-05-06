@@ -1,6 +1,10 @@
+import lspace.types.geo.MultiLine;
+
 import javax.swing.*;
+import javax.swing.plaf.multi.MultiLabelUI;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Render extends JFrame {
 
@@ -12,53 +16,35 @@ public class Render extends JFrame {
     private int okynkoXold = 0;
     private int okynkoYold = 0;
 
+    private JLabel zadani;
+    private String zadaniDoJLabelu;
+
 
     public Render() {
         JPanel artBox = new JPanel();
         JPanel setupBox = new JPanel();
         JPanel mainPanel = new JPanel();
 
+        ArrayList<String> zadavajici = new ArrayList<>();
+
+        this.zadani = new JLabel();
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(new Dimension(rowsAndColumms * 100,(rowsAndColumms + ((rowsAndColumms / 100)*10)) * 100));
         setLayout(new BorderLayout());
-        setResizable(false);
+        setResizable(true);
 
         artBox.setSize(new Dimension(rowsAndColumms * 100,rowsAndColumms * 100));
         artBox.setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
 
         setupBox.setSize(new Dimension(rowsAndColumms * 100,((rowsAndColumms / 100)*10)));
-        setupBox.setLayout(new GridBagLayout());
+        setupBox.setLayout(new BorderLayout());
 
-        GridBagConstraints g = new GridBagConstraints();
-
-
-        JLabel text = new JLabel();
-
-        text.setBackground(Color.white);
-
-        g.gridx = 1;
-        g.gridy = 1;
-
-        g.weightx = 1;
-        g.weighty = 2;
-
-        g.fill = GridBagConstraints.BOTH;
-
-        setupBox.add(text,g);
+        zadani.setBackground(Color.white);
+        setupBox.add(zadani,BorderLayout.CENTER);
 
         JButton done = new JButton();
-
-        done.setSize(new Dimension(500,100));
-
-        g.gridx = 3;
-        g.gridy = 1;
-
-        g.weightx = 1;
-        g.weighty = 1;
-
-        g.fill = GridBagConstraints.BOTH;
-
-        setupBox.add(done,g);
+        setupBox.add(done,BorderLayout.SOUTH);
 
 
         this.components = getComponents();
@@ -74,7 +60,7 @@ public class Render extends JFrame {
                 int okynkoY = (e.getX() / (artBox.getWidth() / rowsAndColumms));
                 int okynkoX = (e.getY() / (artBox.getHeight() / rowsAndColumms));
 
-
+               //←,↑,→,↓
 
                 pocetOkynek = okynkoX * rowsAndColumms + okynkoY;
 
@@ -83,20 +69,23 @@ public class Render extends JFrame {
                     switch (labels[okynkoXold][okynkoYold].getType()){
                         case STARTINGPOINT -> {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
+                            zadavajici.add("↓");
                         }
-                        case SVISLAZEZHORA, ZEZDOLADOLEVA, ZEZDOLADOPRAVA, ZEZHORADOLEVA, ZEZHORADOPRAVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
+                        case SVISLAZEZHORA, ZEZDOLADOLEVA, ZEZDOLADOPRAVA, ZEZHORADOLEVA, ZEZHORADOPRAVA, BLANK -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
+                            zadavajici.add("↓");
+                            break;
+                        }
                         case VODOROVNAZLEVA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOLEVA);
+                            zadavajici.add("↓");
                             break;
                         }
                         case VODOROVNAZPRAVA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOPRAVA);
-                            break;
-                        }
-                        case BLANK -> {
-                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZHORA);
+                            zadavajici.add("↓");
                             break;
                         }
                     }
@@ -104,20 +93,28 @@ public class Render extends JFrame {
                     switch (labels[okynkoXold][okynkoYold].getType()){
                         case STARTINGPOINT -> {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                            zadavajici.add("↑");
                         }
-                        case SVISLAZEZDOLA, ZEZDOLADOLEVA, ZEZDOLADOPRAVA, ZEZHORADOLEVA, ZEZHORADOPRAVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                        case SVISLAZEZDOLA, ZEZDOLADOLEVA, ZEZDOLADOPRAVA, ZEZHORADOLEVA, ZEZHORADOPRAVA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                            zadavajici.add("↑");
+                            break;
+                        }
                         case VODOROVNAZLEVA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOLEVA);
+                            zadavajici.add("↑");
                             break;
                         }
                         case VODOROVNAZPRAVA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOPRAVA);
+                            zadavajici.add("↑");
                             break;
                         }
                         case BLANK -> {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.SVISLAZEZDOLA);
+                            zadavajici.add("↑");
                             break;
                         }
                     }
@@ -125,20 +122,27 @@ public class Render extends JFrame {
                     switch (labels[okynkoXold][okynkoYold].getType()){
                         case STARTINGPOINT -> {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                            zadavajici.add("→");
                         }
-                        case VODOROVNAZLEVA,ZEZDOLADOLEVA,ZEZDOLADOPRAVA,ZEZHORADOLEVA,ZEZHORADOPRAVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                        case VODOROVNAZLEVA,ZEZDOLADOLEVA,ZEZDOLADOPRAVA,ZEZHORADOLEVA,ZEZHORADOPRAVA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                            zadavajici.add("→");
+                        }
                         case SVISLAZEZHORA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOPRAVA);
+                            zadavajici.add("→");
                             break;
                         }
                         case SVISLAZEZDOLA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOPRAVA);
+                            zadavajici.add("→");
                             break;
                         }
                         case BLANK -> {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZLEVA);
+                            zadavajici.add("→");
                             break;
                         }
                     }
@@ -147,25 +151,33 @@ public class Render extends JFrame {
                     switch (labels[okynkoXold][okynkoYold].getType()){
                         case STARTINGPOINT -> {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                            zadavajici.add("←");
                         }
-                        case VODOROVNAZPRAVA,ZEZDOLADOLEVA,ZEZDOLADOPRAVA,ZEZHORADOLEVA,ZEZHORADOPRAVA -> labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                        case VODOROVNAZPRAVA,ZEZDOLADOLEVA,ZEZDOLADOPRAVA,ZEZHORADOLEVA,ZEZHORADOPRAVA -> {
+                            labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                            zadavajici.add("←");
+                        }
                         case SVISLAZEZHORA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZHORADOLEVA);
+                            zadavajici.add("←");
                             break;
                         }
                         case SVISLAZEZDOLA -> {
                             labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.ZEZDOLADOLEVA);
+                            zadavajici.add("←");
                             break;
                         }
                         case BLANK -> {
                             labels[okynkoXold][okynkoYold].setTypeOfCell(TypesOfCells.VODOROVNAZPRAVA);
+                            zadavajici.add("←");
                             break;
                         }
                     }
                 } else if(labels[okynkoX][okynkoY].getType() == null){
                     labels[okynkoX][okynkoY].setTypeOfCell(TypesOfCells.STARTINGPOINT);
+                    zadavajici.add(" X: " + okynkoX + " Y: " + okynkoY);
                 }
 
                 System.out.println("OldX: " + okynkoXold + " OldY: " + okynkoYold);
@@ -175,6 +187,8 @@ public class Render extends JFrame {
                 okynkoXold = okynkoX;
 
                 System.out.println(pocetOkynek);
+
+               zadani.setText(zadavajici.toString());
             }
         });
 
@@ -203,7 +217,7 @@ public class Render extends JFrame {
 
         g2.gridheight = 100;
         g2.gridwidth = 1000;
-        add(setupBox,BorderLayout.SOUTH);
+        add(setupBox,BorderLayout.EAST);
 
         addWindowListener(new WindowAdapter() {
             @Override
