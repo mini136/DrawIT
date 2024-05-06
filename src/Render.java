@@ -16,7 +16,7 @@ public class Render extends JFrame {
     private int okynkoXold = 0;
     private int okynkoYold = 0;
 
-    private JLabel zadani;
+    private JTextArea zadani;
     private String zadaniDoJLabelu;
 
 
@@ -27,23 +27,26 @@ public class Render extends JFrame {
 
         ArrayList<String> zadavajici = new ArrayList<>();
 
-        this.zadani = new JLabel();
+        this.zadani = new JTextArea();
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(new Dimension(rowsAndColumms * 100,(rowsAndColumms + ((rowsAndColumms / 100)*10)) * 100));
+        setSize(new Dimension(1080,1500));
         setLayout(new BorderLayout());
         setResizable(true);
 
         artBox.setSize(new Dimension(rowsAndColumms * 100,rowsAndColumms * 100));
         artBox.setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
 
-        setupBox.setSize(new Dimension(rowsAndColumms * 100,((rowsAndColumms / 100)*10)));
+        setupBox.setSize(new Dimension(rowsAndColumms * 100,200));
         setupBox.setLayout(new BorderLayout());
 
         zadani.setBackground(Color.white);
-        setupBox.add(zadani,BorderLayout.CENTER);
+        zadani.setLineWrap(true);
+        zadani.setFont(new Font("Monospaced", Font.PLAIN, 20));
+        setupBox.add(zadani,BorderLayout.NORTH);
 
         JButton done = new JButton();
+        done.setSize(1000,200);
         setupBox.add(done,BorderLayout.SOUTH);
 
 
@@ -217,7 +220,7 @@ public class Render extends JFrame {
 
         g2.gridheight = 100;
         g2.gridwidth = 1000;
-        add(setupBox,BorderLayout.EAST);
+        add(setupBox,BorderLayout.NORTH);
 
         addWindowListener(new WindowAdapter() {
             @Override
