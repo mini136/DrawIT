@@ -1,7 +1,8 @@
-import lspace.types.geo.MultiLine;
+package Cell;
+
+import Cell.Cell;
 
 import javax.swing.*;
-import javax.swing.plaf.multi.MultiLabelUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
