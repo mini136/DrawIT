@@ -1,4 +1,4 @@
-package Algorithm;
+package NewImage;
 
 import Cell.Cell;
 import Cell.TypesOfCells;
@@ -10,17 +10,15 @@ import java.util.ArrayList;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
-public class MainAlgorithm extends JPanel {
-
+public class ArtPane extends JPanel {
+/*
     private int rowsAndColumms = 10;
     private Cell startingCell;
-    private int pocetOkynek;
     private ArrayList<String> zadavajici;
-    private String vypis;
     private int okynkoXold = 0;
     private int okynkoYold = 0;
     private Cell[][] labels = new Cell[rowsAndColumms][rowsAndColumms];
-  public MainAlgorithm(){
+  public ArtPane(){
 
       setSize(new Dimension(800,800));
       setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
@@ -37,8 +35,6 @@ public class MainAlgorithm extends JPanel {
               int okynkoX = (e.getY() / (getHeight() / rowsAndColumms));
 
               //←,↑,→,↓
-
-              pocetOkynek = okynkoX * rowsAndColumms + okynkoY;
 
               if (okynkoXold == (okynkoX - 1)) {
 
@@ -158,13 +154,10 @@ public class MainAlgorithm extends JPanel {
 
               System.out.println("OldX: " + okynkoXold + " OldY: " + okynkoYold);
               System.out.println("X: " + okynkoX + " Y: " + okynkoY);
+              System.out.println(zadavajici.toString());
 
               okynkoYold = okynkoY;
               okynkoXold = okynkoX;
-
-              System.out.println(pocetOkynek);
-
-              setVypis(zadavajici.toString());
           }
       });
 
@@ -179,7 +172,7 @@ public class MainAlgorithm extends JPanel {
           @Override
           public void mouseClicked(MouseEvent e) {
               if(startingCell == null){
-                  startingCell = new Cell(true);
+                  startingCell = new Cell(true,Color.black);
               }
           }
       });
@@ -196,8 +189,9 @@ public class MainAlgorithm extends JPanel {
 
               gc.fill = GridBagConstraints.CENTER;
 
-              Cell cell = new Cell(false);
+              Cell cell = new Cell(false,Color.black);
               cell.setSize(new Dimension(100, 100));
+              cell.setBackground(Color.blue);
               cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
               cell.setType(TypesOfCells.BLANK);
               cell.setText(i + " " + n);
@@ -238,28 +232,12 @@ public class MainAlgorithm extends JPanel {
         this.startingCell = startingCell;
     }
 
-    public int getPocetOkynek() {
-        return pocetOkynek;
-    }
-
-    public void setPocetOkynek(int pocetOkynek) {
-        this.pocetOkynek = pocetOkynek;
-    }
-
     public ArrayList<String> getZadavajici() {
         return zadavajici;
     }
 
     public void setZadavajici(ArrayList<String> zadavajici) {
         this.zadavajici = zadavajici;
-    }
-
-    public String getVypis() {
-        return vypis;
-    }
-
-    public void setVypis(String vypis) {
-        this.vypis = vypis;
     }
 
     public int getOkynkoXold() {
@@ -287,4 +265,6 @@ public class MainAlgorithm extends JPanel {
     }
 
     //endregion
+
+    */
 }

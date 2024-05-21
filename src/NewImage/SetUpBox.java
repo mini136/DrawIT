@@ -1,10 +1,11 @@
-package Panels;
+package NewImage;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class SetUpBox extends JPanel {
 
@@ -40,8 +41,8 @@ public class SetUpBox extends JPanel {
         });
     }
 
-    public void setTextString(String text){
-        textArea.setText(text);
+    public void setTextString(ArrayList<String> arrayList){
+        textArea.setText(arrayList.toString());
     }
 
     public boolean isPressed(){

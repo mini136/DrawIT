@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="eu.l.space.types_3" level="project" />
+    <orderEntry type="library" name="jtattoo.JTattoo" level="project" />
   </component>
 </module>

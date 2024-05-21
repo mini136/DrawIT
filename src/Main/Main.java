@@ -1,14 +1,11 @@
 package Main;
 
-import Cell.Render;
-import Panels.SetUpBox;
-
-import javax.print.DocFlavor;
-import javax.swing.*;
+import NewImage.AssignArt;
 
 public class Main {
     public static void main(String[] args) {
        //Render rend = new Render();
-        AssignArt art = new AssignArt();
+       AssignArt art = new AssignArt();
+        //new AppMain();
     }
 }

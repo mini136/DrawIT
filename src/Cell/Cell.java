@@ -7,26 +7,22 @@ import java.awt.event.MouseListener;
 
 public class Cell extends JLabel {
 
-    private TypesOfCells type;
-    private boolean startingPoint;
-    public Cell(boolean startingPoint){
-        setStartingPoint(startingPoint);
-       setBackground(Color.white);
-       setText("");
+    protected TypesOfCells type;
+
+    private Color colorOfLine;
+    public Cell(Color colorOfLine){
+        setBackground(Color.white);
+        setText("");
+        setColorOfLine(colorOfLine);
     }
 
 
 
     public void setTypeOfCell(TypesOfCells typeOfCell){
-        switch(typeOfCell){
-            case TypesOfCells.BLANK -> setIcon(new ImageIcon("pictures/BLANK.png"));
-            case TypesOfCells.STARTINGPOINT -> setIcon(new ImageIcon("pictures/startingPoint.png"));
-            case TypesOfCells.SVISLAZEZHORA, TypesOfCells.SVISLAZEZDOLA -> setIcon(new ImageIcon("pictures/svislaCara.png"));
-            case TypesOfCells.VODOROVNAZLEVA, TypesOfCells.VODOROVNAZPRAVA -> setIcon(new ImageIcon("pictures/vodorovnaCara.png"));
-            case TypesOfCells.ZEZHORADOPRAVA -> setIcon(new ImageIcon("pictures/zeZhoraVpravo.png"));
-            case TypesOfCells.ZEZHORADOLEVA -> setIcon(new ImageIcon("pictures/zeZhoraVlevo.png"));
-            case TypesOfCells.ZEZDOLADOLEVA -> setIcon(new ImageIcon("pictures/zeZdolaVlevo.png"));
-            case TypesOfCells.ZEZDOLADOPRAVA -> setIcon(new ImageIcon("pictures/zeZdolaVpravo.png"));
+        if(typeOfCell == TypesOfCells.BLANK){
+            setBackground(Color.white);
+        } else {
+            setBackground(colorOfLine);
         }
        setType(typeOfCell);
     }
@@ -43,11 +39,11 @@ public class Cell extends JLabel {
         this.type = type;
     }
 
-    public boolean isStartingPoint() {
-        return startingPoint;
+    public Color getColorOfLine() {
+        return colorOfLine;
     }
 
-    public void setStartingPoint(boolean startingPoint) {
-        this.startingPoint = startingPoint;
+    public void setColorOfLine(Color colorOfLine) {
+        this.colorOfLine = colorOfLine;
     }
 }

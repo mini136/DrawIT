@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Render extends JFrame {
 
-    int rowsAndColumms = 10;
+  /*  int rowsAndColumms = 10;
     private Component[] components;
     private Cell startingCell;
     private Cell[][] labels = new Cell[rowsAndColumms][rowsAndColumms];
@@ -200,7 +200,7 @@ public class Render extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(startingCell == null){
-                startingCell = new Cell(true);
+                startingCell = new Cell(true,Color.black);
             }
             }
         });
@@ -243,7 +243,7 @@ public class Render extends JFrame {
 
                 gc.fill = GridBagConstraints.CENTER;
 
-                Cell cell = new Cell(false);
+                Cell cell = new Cell(false,Color.black);
                 cell.setSize(new Dimension(100,100));
                 cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 cell.setType(TypesOfCells.BLANK);
@@ -270,5 +270,5 @@ public class Render extends JFrame {
             e.printStackTrace();
         }
     }
-
+                 */
 }

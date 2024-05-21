@@ -1,14 +1,9 @@
 package Cell;
 
 public enum TypesOfCells {
-    STARTINGPOINT,
-    SVISLAZEZHORA,
-    SVISLAZEZDOLA,
-    VODOROVNAZLEVA,
-    VODOROVNAZPRAVA,
-    ZEZHORADOPRAVA,
-    ZEZHORADOLEVA,
-    ZEZDOLADOPRAVA,
-    ZEZDOLADOLEVA,
+    DOWN,
+    UP,
+    LEFT,
+    RIGHT,
     BLANK,
 }
