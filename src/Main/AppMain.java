@@ -1,6 +1,4 @@
 package Main;
-
-import Border.RoundedBorder;
 import NewImage.AssignArt;
 
 import javax.swing.*;
