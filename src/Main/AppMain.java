@@ -1,9 +1,12 @@
 package Main;
 
 import Border.RoundedBorder;
+import NewImage.AssignArt;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class AppMain extends JFrame {
@@ -39,7 +42,22 @@ public class AppMain extends JFrame {
         newArt = new JButton("Make New Picture");
         newArt.setPreferredSize(new Dimension(300, 100)); // Nastavení rozměrů tlačítka
         newArt.setBackground(new Color(176,87,215));
+        newArt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                AssignArt assign = new AssignArt();
+            }
+        });
+
         setUp.setBorderPainted(true);
+        setUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+
+            }
+        });
 
         findArt = new JButton("Play");
         findArt.setPreferredSize(new Dimension(300, 100)); // Nastavení rozměrů tlačítka

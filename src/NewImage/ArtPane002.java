@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class ArtPane002 extends JPanel {
-    private int rowsAndColumms = 10;
+    private int rowsAndColumms = 20;
     private StartingCell startingCell;
     private ArrayList<String> outputText;
     private int cellX = 0;
@@ -41,8 +41,8 @@ public class ArtPane002 extends JPanel {
                 cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 cell.setType(TypesOfCells.BLANK);
 
-                cell.setText(i + " " + n);
-                labels[i][n] = cell;
+                //cell.setText(i + " " + n);
+                labels[n][i] = cell;
                 add(cell);
             }
         }
@@ -52,16 +52,16 @@ public class ArtPane002 extends JPanel {
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
 
-                 cellY = (e.getX() / (getWidth() / rowsAndColumms));
-                 cellX = (e.getY() / (getHeight() / rowsAndColumms));
+                 cellX = (e.getX() / (getWidth() / rowsAndColumms));
+                 cellY = (e.getY() / (getHeight() / rowsAndColumms));
 
                  if(canDraw){
                      if (cellXold == (cellX - 1)) {
-                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
-                         outputText.add("←");
-                     } else if(cellXold == (cellX + 1)) {
                          labels[cellX][cellY].setTypeOfCell(TypesOfCells.RIGHT);
                          outputText.add("→");
+                     } else if(cellXold == (cellX + 1)) {
+                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
+                         outputText.add("←");
                      } else if(cellYold == (cellY - 1)){
                          labels[cellX][cellY].setTypeOfCell(TypesOfCells.DOWN);
                          outputText.add("↓");

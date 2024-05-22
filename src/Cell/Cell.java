@@ -20,8 +20,12 @@ public class Cell extends JLabel {
 
     public void setTypeOfCell(TypesOfCells typeOfCell){
         if(typeOfCell == TypesOfCells.BLANK){
+            setOpaque(true);
             setBackground(Color.white);
+            setForeground(Color.white);
         } else {
+            setOpaque(true);
+            setForeground(Color.white);
             setBackground(colorOfLine);
         }
        setType(typeOfCell);

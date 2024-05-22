@@ -11,13 +11,18 @@ public class AssignArt extends JFrame{
         setSize(800,1000);
         setResizable(false);
         setLayout(new BorderLayout());
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         SetUpBox box = new SetUpBox();
         ArtPane002 algorithm = new ArtPane002(Color.black);
+
         add(box,BorderLayout.SOUTH);
         add(algorithm,BorderLayout.CENTER);
+
         setVisible(true);
+
         Timer timer = new Timer(100, e -> {
+
             box.setTextString(algorithm.getOutputText());
             box.repaint();
 
@@ -25,7 +30,9 @@ public class AssignArt extends JFrame{
                 setVisible(false);
                 done = true;
             }
+
         });
+
         timer.start();
     }
 }
