@@ -4,15 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 
-public class Cell extends JLabel {
+public class Cell extends JLabel implements Serializable {
 
     protected TypesOfCells type;
-
     private Color colorOfLine;
     public Cell(Color colorOfLine){
         setBackground(Color.white);
-        setText("");
+        setOpaque(true);
         setColorOfLine(colorOfLine);
     }
 

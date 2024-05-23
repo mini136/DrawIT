@@ -26,7 +26,9 @@ public class ArtPane002 extends JPanel {
 
     public ArtPane002(Color color) {
         setSize(new Dimension(800,800));                    //setSize of panel
-        setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));       //setLayout of panel to gridLayout
+        setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
+        setBackground(Color.black);//setLayout of panel to gridLayout
+        setOpaque(true);
 
         this.outputText = new ArrayList<>();                            //←,↑,→,↓
         this.colorOfLine = color;
@@ -88,7 +90,7 @@ public class ArtPane002 extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(startingCell == null){
-                    startingCell = new StartingCell(colorOfLine,cellX,cellY);
+                    startingCell = new StartingCell(colorOfLine);
                     canDraw = true;
                 }
             }
