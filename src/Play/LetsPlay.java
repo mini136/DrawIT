@@ -33,5 +33,9 @@ public class LetsPlay extends JFrame {
         add(box,BorderLayout.SOUTH);
         setVisible(true);
     }
+
+    public boolean isPressed(){
+        return box.isPressed();
+    }
 }
 

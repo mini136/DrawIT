@@ -94,6 +94,7 @@ public class ArtPane002 extends JPanel {
                 countOfClicks++;
                 if(startingCell == null && countOfClicks % 2 != 0){
                     startingCell = new StartingCell(colorOfLine);
+                    startingCell.setOpaque(true);
                     labels[cellX][cellY] = startingCell;
                     canDraw = true;
                 } else if (endingCell == null && countOfClicks % 2 == 0) {

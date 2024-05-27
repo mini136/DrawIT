@@ -25,7 +25,7 @@ public class Cell extends JLabel implements Serializable {
             setForeground(Color.white);
         } else {
             setOpaque(true);
-            setForeground(Color.white);
+            setForeground(colorOfLine);
             setBackground(colorOfLine);
         }
        setType(typeOfCell);

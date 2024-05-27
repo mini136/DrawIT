@@ -20,6 +20,7 @@ public class ChooseFrame extends JFrame {
     private File directory;
     private Font customFont;
     private Component[] listOfButtons;
+    private boolean isPressed;
 
     public ChooseFrame() throws HeadlessException {
 
@@ -65,6 +66,10 @@ public class ChooseFrame extends JFrame {
                     }
                     setVisible(false);
                     LetsPlay play = new LetsPlay(pictures[indexOfButton].getPath());
+                    Timer timer = new Timer(100, d -> {
+                        isPressed = play.isPressed();
+                    });
+                    timer.start();
 
                 }
             });
@@ -92,6 +97,14 @@ public class ChooseFrame extends JFrame {
 
     public String deleteSer(String fileName) {
             return fileName.substring(0, fileName.length() - 4);
+    }
+
+    public boolean isPressed() {
+        return isPressed;
+    }
+
+    public void setPressed(boolean pressed) {
+        isPressed = pressed;
     }
 }
 

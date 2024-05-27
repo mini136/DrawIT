@@ -57,16 +57,19 @@ public class AppMain extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                String fileName = JOptionPane.showInputDialog("Name of your project:");
-                AssignArt assign = new AssignArt(fileName);
-                Timer timer = new Timer(100, d -> {
-                    if(assign.isPressed()){
-                        assign.setVisible(false);
-                        setVisible(true);
-                    }
+                if(!isVisible()) {
+                    String fileName = JOptionPane.showInputDialog("Name of your project:");
+                    AssignArt assign = new AssignArt(fileName);
+                    Timer timer = new Timer(100, d -> {
+                        if (assign.isPressed()) {
+                            assign.setVisible(false);
+                            setVisible(true);
+                            ((Timer) d.getSource()).stop();
+                        }
 
-                });
-                timer.start();
+                    });
+                    timer.start();
+                }
             }
         });
 
@@ -83,13 +86,6 @@ public class AppMain extends JFrame {
         findArt.setBackground(new Color(176, 87, 215));
         findArt.setFont(customFont);
         findArt.setForeground(Color.white);
-        findArt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                ChooseFrame frame = new ChooseFrame();
-            }
-        });
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 20, 20, 20); // Přidání mezery kolem komponent
@@ -124,6 +120,23 @@ public class AppMain extends JFrame {
         pack(); // Uložit komponenty
         setLocationRelativeTo(null); // Zarovnat okno do středu obrazovky
         setVisible(true); // Zobrazit okno
+
+        findArt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                if(!isVisible()) {
+                    ChooseFrame frame = new ChooseFrame();
+                    Timer timer = new Timer(100, d -> {
+                        if (frame.isPressed()) {
+                            ((Timer) d.getSource()).stop();
+                        }
+
+                    });
+                    timer.start();
+                }
+            }
+        });
     }
 
     private ImageIcon resizeIcon(String path, int width, int height) {
