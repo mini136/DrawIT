@@ -1,6 +1,7 @@
 package Main;
 
 import NewImage.AssignArt;
+import Play.ChooseFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +18,7 @@ public class AppMain extends JFrame {
     private JButton newArt;
     private JButton findArt;
     private JLabel logo;
+    private Font customFont;
 
     public AppMain() throws HeadlessException {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -30,21 +32,41 @@ public class AppMain extends JFrame {
             throw new RuntimeException(e);
         }
 
+        try {
+            customFont = new Font("SansSerif", Font.BOLD, 35); // Zde můžete specifikovat jiný font, styl a velikost
+        } catch (Exception e) {
+            e.printStackTrace();
+            customFont = new Font("Arial", Font.PLAIN, 14); // Fallback na základní font, pokud vlastní font není nalezen
+        }
+
         logo = new JLabel();
         logo.setIcon(resizeIcon("logos/drawItIcon.png", 300, 300)); // Resize the icon
         setUp = new JButton("Options");
         setUp.setPreferredSize(new Dimension(300, 100)); // Nastavení rozměrů tlačítka
         setUp.setBackground(new Color(176, 87, 215));
         setUp.setBorderPainted(true);
+        setUp.setFont(customFont);
+        setUp.setForeground(Color.white);
 
-        newArt = new JButton("Make New Picture");
+        newArt = new JButton("New Picture");
         newArt.setPreferredSize(new Dimension(300, 100)); // Nastavení rozměrů tlačítka
         newArt.setBackground(new Color(176, 87, 215));
+        newArt.setFont(customFont);
+        newArt.setForeground(Color.white);
         newArt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                AssignArt assign = new AssignArt("njknklnkl");
+                String fileName = JOptionPane.showInputDialog("Name of your project:");
+                AssignArt assign = new AssignArt(fileName);
+                Timer timer = new Timer(100, d -> {
+                    if(assign.isPressed()){
+                        assign.setVisible(false);
+                        setVisible(true);
+                    }
+
+                });
+                timer.start();
             }
         });
 
@@ -59,6 +81,15 @@ public class AppMain extends JFrame {
         findArt = new JButton("Play");
         findArt.setPreferredSize(new Dimension(300, 100)); // Nastavení rozměrů tlačítka
         findArt.setBackground(new Color(176, 87, 215));
+        findArt.setFont(customFont);
+        findArt.setForeground(Color.white);
+        findArt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                ChooseFrame frame = new ChooseFrame();
+            }
+        });
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 20, 20, 20); // Přidání mezery kolem komponent

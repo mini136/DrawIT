@@ -1,8 +1,8 @@
-package NewImage;
+package Play;
 
 import Cell.Cell;
-import Cell.StartingCell;
 import Cell.EndingCell;
+import Cell.StartingCell;
 import Cell.TypesOfCells;
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
-public class ArtPane002 extends JPanel {
+public class PlayArtPane extends JPanel {
     private int rowsAndColumms = 20;
     private StartingCell startingCell;
     private EndingCell endingCell;
@@ -26,7 +26,7 @@ public class ArtPane002 extends JPanel {
     private Color colorOfLine;
     int countOfClicks = 0;
 
-    public ArtPane002(Color color) {
+    public PlayArtPane(Color color) {
         setSize(new Dimension(800,800));                    //setSize of panel
         setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
         setBackground(Color.black);//setLayout of panel to gridLayout
@@ -56,24 +56,20 @@ public class ArtPane002 extends JPanel {
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
 
-                 cellX = (e.getX() / (getWidth() / rowsAndColumms));
-                 cellY = (e.getY() / (getHeight() / rowsAndColumms));
+                cellX = (e.getX() / (getWidth() / rowsAndColumms));
+                cellY = (e.getY() / (getHeight() / rowsAndColumms));
 
-                 if(canDraw){
-                     if (cellXold == (cellX - 1)) {
-                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.RIGHT);
-                         outputText.add("→");
-                     } else if(cellXold == (cellX + 1)) {
-                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
-                         outputText.add("←");
-                     } else if(cellYold == (cellY - 1)){
-                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.DOWN);
-                         outputText.add("↓");
-                     } else if(cellYold == (cellY + 1)){
-                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.UP);
-                         outputText.add("↑");
-                     }
-                 }
+                if(canDraw){
+                    if (cellXold == (cellX - 1)) {
+                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.RIGHT);
+                    } else if(cellXold == (cellX + 1)) {
+                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
+                    } else if(cellYold == (cellY - 1)){
+                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.DOWN);
+                    } else if(cellYold == (cellY + 1)){
+                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.UP);
+                    }
+                }
 
                 cellXold = cellX;
                 cellYold = cellY;
@@ -118,6 +114,13 @@ public class ArtPane002 extends JPanel {
         } catch (AWTException e) {
             e.printStackTrace();
         }
+    }
+
+    public void startingPoint(int x,int y){
+            startingCell = new StartingCell(Color.RED);
+            startingCell.setOpaque(true);
+            labels[x][y] = startingCell;
+            canDraw = true;
     }
 
     //region getters and setters

@@ -12,8 +12,9 @@ public class AssignArt extends JFrame{
 
     private boolean done;
     private ArrayList<String> zadani;
-
     private String name;
+    private JButton button;
+    private SetUpBox box;
     public AssignArt(String name) throws HeadlessException {
         this.name = name;
         setSize(800,1000);
@@ -25,13 +26,13 @@ public class AssignArt extends JFrame{
             throw new RuntimeException(e);
         }
 
-        JButton button = new JButton();
-        SetUpBox box = new SetUpBox(button);
+        button = new JButton();
+        box = new SetUpBox(button);
         ArtPane002 algorithm = new ArtPane002(Color.black);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("pictures/cells.ser"))) {
+                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("pictures/" + name + ".ser"))) {
                     oos.writeObject(algorithm.getLabels());
                     System.out.println("Data were saved successfully.");
                 } catch (IOException s) {
@@ -60,4 +61,9 @@ public class AssignArt extends JFrame{
 
         timer.start();
     }
+
+    public boolean isPressed(){
+        return box.isPressed();
+    }
+
 }
