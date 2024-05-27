@@ -14,8 +14,8 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class ArtPane002 extends JPanel {
     private int rowsAndColumms = 20;
-    private StartingCell startingCell;
-    private EndingCell endingCell;
+    private Cell startingCell;
+    private Cell endingCell;
     private ArrayList<String> outputText;
     private int cellX = 0;
     private int cellY = 0;
@@ -93,12 +93,12 @@ public class ArtPane002 extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 countOfClicks++;
                 if(startingCell == null && countOfClicks % 2 != 0){
-                    startingCell = new StartingCell(colorOfLine);
+                    startingCell = new Cell(colorOfLine);
                     startingCell.setOpaque(true);
                     labels[cellX][cellY] = startingCell;
                     canDraw = true;
                 } else if (endingCell == null && countOfClicks % 2 == 0) {
-                    endingCell = new EndingCell(colorOfLine);
+                    endingCell = new Cell(colorOfLine);
                     labels[cellX][cellY] = endingCell;
                     canDraw = false;
                 }
@@ -131,11 +131,11 @@ public class ArtPane002 extends JPanel {
         this.rowsAndColumms = rowsAndColumms;
     }
 
-    public StartingCell getStartingCell() {
+    public Cell getStartingCell() {
         return startingCell;
     }
 
-    public void setStartingCell(StartingCell startingCell) {
+    public void setStartingCell(Cell startingCell) {
         this.startingCell = startingCell;
     }
 

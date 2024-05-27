@@ -14,7 +14,7 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class PlayArtPane extends JPanel {
     private int rowsAndColumms = 20;
-    private StartingCell startingCell;
+    private Cell startingCell;
     private EndingCell endingCell;
     private ArrayList<String> outputText;
     private int cellX = 0;
@@ -88,13 +88,9 @@ public class PlayArtPane extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 countOfClicks++;
-                if(startingCell == null && countOfClicks % 2 != 0){
-                    startingCell = new StartingCell(colorOfLine);
-                    labels[cellX][cellY] = startingCell;
+                if(countOfClicks % 2 != 0){
                     canDraw = true;
-                } else if (endingCell == null && countOfClicks % 2 == 0) {
-                    endingCell = new EndingCell(colorOfLine);
-                    labels[cellX][cellY] = endingCell;
+                } else if (countOfClicks % 2 == 0) {
                     canDraw = false;
                 }
             }
@@ -117,7 +113,7 @@ public class PlayArtPane extends JPanel {
     }
 
     public void startingPoint(int x,int y){
-            startingCell = new StartingCell(Color.RED);
+            startingCell = new Cell(Color.RED);
             startingCell.setOpaque(true);
             labels[x][y] = startingCell;
             canDraw = true;
@@ -133,7 +129,7 @@ public class PlayArtPane extends JPanel {
         this.rowsAndColumms = rowsAndColumms;
     }
 
-    public StartingCell getStartingCell() {
+    public Cell getStartingCell() {
         return startingCell;
     }
 

@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 public class LetsPlay extends JFrame {
 
@@ -15,11 +16,14 @@ public class LetsPlay extends JFrame {
     private SetUpBox box;
     private String filePath;
     private JButton button;
+
+    private ArrayList<String> task;
     public LetsPlay(String filePath){
 
         setSize(800,1000);
         setResizable(false);
         setLayout(new BorderLayout());
+        this.task = new ArrayList<>();
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             this.labels = (Cell[][]) ois.readObject();
@@ -27,8 +31,31 @@ public class LetsPlay extends JFrame {
             e.printStackTrace();
         }
 
+
+        //←,↑,→,↓
+
+        for (Cell[] row : labels) {
+            for (Cell cell : row) {
+                switch(cell.getType()){
+                    case UP:
+                        task.add("↑");
+                    case DOWN:
+                        task.add("↓");
+                    case LEFT:
+                        task.add("←");
+                    case RIGHT:
+                        task.add("→");
+                    default:
+                        break;
+
+                }
+
+            }
+        }
+
         button = new JButton();
         box = new SetUpBox(button);
+        box.setTextString(task);
 
         add(box,BorderLayout.SOUTH);
         setVisible(true);
