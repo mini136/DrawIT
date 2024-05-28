@@ -16,13 +16,17 @@ public class LetsPlay extends JFrame {
     private SetUpBox box;
     private String filePath;
     private JButton button;
-
+    private PlayArtPane pane;
     private ArrayList<String> task;
+    private Cell startingCell;
+    private boolean canDraw;
     public LetsPlay(String filePath){
 
         setSize(800,1000);
         setResizable(false);
         setLayout(new BorderLayout());
+
+        this.pane = new PlayArtPane(Color.BLACK);
         this.task = new ArrayList<>();
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
@@ -50,6 +54,11 @@ public class LetsPlay extends JFrame {
 
                 }
 
+                if(cell.isStrtingPoint()){
+                    startingCell = cell;
+                    pane.startingPoint(cell.getX(),cell.getY());
+                }
+
             }
         }
 
@@ -58,11 +67,13 @@ public class LetsPlay extends JFrame {
         box.setTextString(task);
 
         add(box,BorderLayout.SOUTH);
+        add(pane,BorderLayout.CENTER);
         setVisible(true);
     }
 
     public boolean isPressed(){
         return box.isPressed();
     }
+
 }
 

@@ -1,8 +1,6 @@
 package Play;
 
 import Cell.Cell;
-import Cell.EndingCell;
-import Cell.StartingCell;
 import Cell.TypesOfCells;
 
 import javax.swing.*;
@@ -15,7 +13,6 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 public class PlayArtPane extends JPanel {
     private int rowsAndColumms = 20;
     private Cell startingCell;
-    private EndingCell endingCell;
     private ArrayList<String> outputText;
     private int cellX = 0;
     private int cellY = 0;
@@ -29,7 +26,8 @@ public class PlayArtPane extends JPanel {
     public PlayArtPane(Color color) {
         setSize(new Dimension(800,800));                    //setSize of panel
         setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
-        setBackground(Color.black);//setLayout of panel to gridLayout
+        setBorder(BorderFactory.createLineBorder(Color.black));
+        setBackground(Color.white);//setLayout of panel to gridLayout
         setOpaque(true);
 
         this.outputText = new ArrayList<>();                            //←,↑,→,↓
@@ -40,9 +38,9 @@ public class PlayArtPane extends JPanel {
             for (int n = 0; n < rowsAndColumms; n++) {
 
                 Cell cell = new Cell(colorOfLine);
+                cell.setStrtingPoint(false);
                 cell.setSize(new Dimension(100, 100));
 
-                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 cell.setType(TypesOfCells.BLANK);
 
                 //cell.setText(i + " " + n);
@@ -80,7 +78,7 @@ public class PlayArtPane extends JPanel {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
-                moveMouseToCenter();
+                moveMouse(startingCell.getX(),startingCell.getY());
             }
         });
 
@@ -100,13 +98,10 @@ public class PlayArtPane extends JPanel {
 
     }
 
-    private void moveMouseToCenter() {
+    private void moveMouse(int x,int y) {
         try {
             Robot robot = new Robot();
-            Point location = getLocationOnScreen();
-            int centerX = location.x + getWidth() / 2;
-            int centerY = location.y + getHeight() / 2;
-            robot.mouseMove(centerX, centerY);
+            robot.mouseMove(x, y);
         } catch (AWTException e) {
             e.printStackTrace();
         }
@@ -114,7 +109,9 @@ public class PlayArtPane extends JPanel {
 
     public void startingPoint(int x,int y){
             startingCell = new Cell(Color.RED);
-            startingCell.setOpaque(true);
+            startingCell.setStrtingPoint(true);
+            startingCell.setX(x);
+            startingCell.setY(y);
             labels[x][y] = startingCell;
             canDraw = true;
     }
@@ -131,10 +128,6 @@ public class PlayArtPane extends JPanel {
 
     public Cell getStartingCell() {
         return startingCell;
-    }
-
-    public void setStartingCell(StartingCell startingCell) {
-        this.startingCell = startingCell;
     }
 
     public ArrayList<String> getOutputText() {

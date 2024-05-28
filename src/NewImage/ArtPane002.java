@@ -1,16 +1,12 @@
 package NewImage;
 
 import Cell.Cell;
-import Cell.StartingCell;
-import Cell.EndingCell;
 import Cell.TypesOfCells;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class ArtPane002 extends JPanel {
     private int rowsAndColumms = 20;
@@ -27,27 +23,23 @@ public class ArtPane002 extends JPanel {
     int countOfClicks = 0;
 
     public ArtPane002(Color color) {
-        setSize(new Dimension(800,800));                    //setSize of panel
-        setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
-        setBackground(Color.black);//setLayout of panel to gridLayout
+        setSize(new Dimension(800, 800)); // Set size of panel
+        setLayout(new GridLayout(rowsAndColumms, rowsAndColumms));
+        setBackground(Color.white); // Set background color of panel
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
         setOpaque(true);
 
-        this.outputText = new ArrayList<>();                            //←,↑,→,↓
+        this.outputText = new ArrayList<>(); // Output text for directions
         this.colorOfLine = color;
         this.labels = new Cell[rowsAndColumms][rowsAndColumms];
 
-        for (int i = 0;i < rowsAndColumms;i++) {
+        for (int i = 0; i < rowsAndColumms; i++) {
             for (int n = 0; n < rowsAndColumms; n++) {
-
                 Cell cell = new Cell(colorOfLine);
-                cell.setSize(new Dimension(100, 100));
-
-                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 cell.setType(TypesOfCells.BLANK);
-
-                //cell.setText(i + " " + n);
                 labels[n][i] = cell;
                 add(cell);
+                cell.setStrtingPoint(false);
             }
         }
 
@@ -56,35 +48,35 @@ public class ArtPane002 extends JPanel {
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
 
-                 cellX = (e.getX() / (getWidth() / rowsAndColumms));
-                 cellY = (e.getY() / (getHeight() / rowsAndColumms));
+                cellX = (e.getX() / (getWidth() / rowsAndColumms));
+                cellY = (e.getY() / (getHeight() / rowsAndColumms));
 
-                 if(canDraw){
-                     if (cellXold == (cellX - 1)) {
-                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.RIGHT);
-                         outputText.add("→");
-                     } else if(cellXold == (cellX + 1)) {
-                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
-                         outputText.add("←");
-                     } else if(cellYold == (cellY - 1)){
-                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.DOWN);
-                         outputText.add("↓");
-                     } else if(cellYold == (cellY + 1)){
-                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.UP);
-                         outputText.add("↑");
-                     }
-                 }
+                if (canDraw) {
+                    if (cellXold == (cellX - 1)) {
+                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.RIGHT);
+                        labels[cellX][cellY].setX(cellX);
+                        labels[cellX][cellY].setY(cellY);
+                        outputText.add("→");
+                    } else if (cellXold == (cellX + 1)) {
+                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
+                        labels[cellX][cellY].setX(cellX);
+                        labels[cellX][cellY].setY(cellY);
+                        outputText.add("←");
+                    } else if (cellYold == (cellY - 1)) {
+                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.DOWN);
+                        labels[cellX][cellY].setX(cellX);
+                        labels[cellX][cellY].setY(cellY);
+                        outputText.add("↓");
+                    } else if (cellYold == (cellY + 1)) {
+                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.UP);
+                        labels[cellX][cellY].setX(cellX);
+                        labels[cellX][cellY].setY(cellY);
+                        outputText.add("↑");
+                    }
+                }
 
                 cellXold = cellX;
                 cellYold = cellY;
-
-            }
-        });
-
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-                moveMouseToCenter();
             }
         });
 
@@ -92,21 +84,26 @@ public class ArtPane002 extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 countOfClicks++;
-                if(startingCell == null && countOfClicks % 2 != 0){
-                    startingCell = new Cell(colorOfLine);
-                    startingCell.setOpaque(true);
-                    labels[cellX][cellY] = startingCell;
+                cellX = (e.getX() / (getWidth() / rowsAndColumms));
+                cellY = (e.getY() / (getHeight() / rowsAndColumms));
+
+                if (countOfClicks % 2 != 0) {
+                    startingCell = labels[cellX][cellY];
+                    startingCell.setStrtingPoint(true);
+                    startingCell.setTypeOfCell(TypesOfCells.STARTINGPOINT);
                     canDraw = true;
-                } else if (endingCell == null && countOfClicks % 2 == 0) {
-                    endingCell = new Cell(colorOfLine);
-                    labels[cellX][cellY] = endingCell;
+                } else {
+                    endingCell = labels[cellX][cellY];
+                    endingCell.setStrtingPoint(false);
+                    endingCell.setTypeOfCell(TypesOfCells.BLANK);
                     canDraw = false;
                 }
+
+                repaint();
             }
         });
 
         setVisible(true);
-
     }
 
     private void moveMouseToCenter() {

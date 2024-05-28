@@ -6,4 +6,6 @@ public enum TypesOfCells {
     LEFT,
     RIGHT,
     BLANK,
+
+    STARTINGPOINT,
 }
