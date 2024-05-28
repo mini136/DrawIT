@@ -43,7 +43,7 @@ public class ChooseFrame extends JFrame {
 
         for(int i = 0;i < pictures.length;i++ ){
             JButton button = new JButton();
-            button.setOpaque(false);
+            button.setOpaque(true);
             button.setBackground(new Color(176, 87, 215));
             button.setForeground(Color.white);
             button.setText(deleteSer(pictures[i].getName()));
@@ -51,6 +51,7 @@ public class ChooseFrame extends JFrame {
             button.setMaximumSize(new Dimension(1050, 100));
             button.setAlignmentX(Component.LEFT_ALIGNMENT);
             button.setFont(customFont);
+            button.setBorder(BorderFactory.createLineBorder(Color.white));
 
             button.addActionListener(new ActionListener() {
                 @Override

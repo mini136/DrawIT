@@ -8,8 +8,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
-
 public class PlayArtPane extends JPanel {
     private int rowsAndColumms = 20;
     private Cell startingCell;
@@ -24,61 +22,55 @@ public class PlayArtPane extends JPanel {
     int countOfClicks = 0;
 
     public PlayArtPane(Color color) {
-        setSize(new Dimension(800,800));                    //setSize of panel
-        setLayout(new GridLayout(rowsAndColumms,rowsAndColumms));
-        setBorder(BorderFactory.createLineBorder(Color.black));
-        setBackground(Color.white);//setLayout of panel to gridLayout
+        setPreferredSize(new Dimension(800, 800)); // Use setPreferredSize instead of setSize
+        setLayout(null);
         setOpaque(true);
 
-        this.outputText = new ArrayList<>();                            //←,↑,→,↓
+        this.outputText = new ArrayList<>();
         this.colorOfLine = color;
         this.labels = new Cell[rowsAndColumms][rowsAndColumms];
 
-        for (int i = 0;i < rowsAndColumms;i++) {
+        for (int i = 0; i < rowsAndColumms; i++) {
             for (int n = 0; n < rowsAndColumms; n++) {
-
                 Cell cell = new Cell(colorOfLine);
-                cell.setStrtingPoint(false);
-                cell.setSize(new Dimension(100, 100));
-
                 cell.setType(TypesOfCells.BLANK);
-
-                //cell.setText(i + " " + n);
                 labels[n][i] = cell;
                 add(cell);
+                System.out.println(cell.toString());
+                cell.setStrtingPoint(false);
             }
         }
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                layoutCells();
+            }
+        });
 
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
-                super.mouseMoved(e);
-
                 cellX = (e.getX() / (getWidth() / rowsAndColumms));
                 cellY = (e.getY() / (getHeight() / rowsAndColumms));
 
-                if(canDraw){
+                System.out.println("Mouse Moved: " + cellX + ", " + cellY);
+
+                if (canDraw) {
                     if (cellXold == (cellX - 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.RIGHT);
-                    } else if(cellXold == (cellX + 1)) {
+                    } else if (cellXold == (cellX + 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
-                    } else if(cellYold == (cellY - 1)){
+                    } else if (cellYold == (cellY - 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.DOWN);
-                    } else if(cellYold == (cellY + 1)){
+                    } else if (cellYold == (cellY + 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.UP);
                     }
                 }
 
                 cellXold = cellX;
                 cellYold = cellY;
-
-            }
-        });
-
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-                moveMouse(startingCell.getX(),startingCell.getY());
             }
         });
 
@@ -86,37 +78,57 @@ public class PlayArtPane extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 countOfClicks++;
-                if(countOfClicks % 2 != 0){
-                    canDraw = true;
-                } else if (countOfClicks % 2 == 0) {
-                    canDraw = false;
-                }
+                canDraw = countOfClicks % 2 != 0;
             }
         });
 
         setVisible(true);
-
     }
 
-    private void moveMouse(int x,int y) {
-        try {
-            Robot robot = new Robot();
-            robot.mouseMove(x, y);
-        } catch (AWTException e) {
-            e.printStackTrace();
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawGrid(g);
+    }
+
+    private void drawGrid(Graphics g) {
+        int width = getWidth();
+        int height = getHeight();
+        int cellWidth = width / rowsAndColumms;
+        int cellHeight = height / rowsAndColumms;
+
+        g.setColor(Color.BLACK);
+        for (int i = 0; i <= rowsAndColumms; i++) {
+            int x = i * cellWidth;
+            g.drawLine(x, 0, x, height);
+            int y = i * cellHeight;
+            g.drawLine(0, y, width, y);
         }
     }
 
-    public void startingPoint(int x,int y){
-            startingCell = new Cell(Color.RED);
-            startingCell.setStrtingPoint(true);
-            startingCell.setX(x);
-            startingCell.setY(y);
-            labels[x][y] = startingCell;
-            canDraw = true;
+    private void layoutCells() {
+        int width = getWidth();
+        int height = getHeight();
+        int cellWidth = width / rowsAndColumms;
+        int cellHeight = height / rowsAndColumms;
+
+        for (int i = 0; i < rowsAndColumms; i++) {
+            for (int j = 0; j < rowsAndColumms; j++) {
+                labels[j][i].setBounds(j * cellWidth, i * cellHeight, cellWidth, cellHeight);
+            }
+        }
     }
 
-    //region getters and setters
+    public void startingPoint(int x, int y) {
+        startingCell = new Cell(Color.RED);
+        startingCell.setStrtingPoint(true);
+        startingCell.setX(x);
+        startingCell.setY(y);
+        labels[x][y] = startingCell;
+        canDraw = true;
+    }
+
+    // region getters and setters
 
     public int getRowsAndColumms() {
         return rowsAndColumms;
@@ -194,5 +206,5 @@ public class PlayArtPane extends JPanel {
         this.colorOfLine = colorOfLine;
     }
 
-    //endregion
+    // endregion
 }

@@ -25,7 +25,7 @@ public class AssignArt extends JFrame {
 
         button = new JButton("Save");
         box = new SetUpBox(button);
-        ArtPane002 algorithm = new ArtPane002(Color.black);
+        ArtPane002 algorithm = new ArtPane002(Color.black);// Vytvoření nového panelu pro mřížku
 
         button.addActionListener(new ActionListener() {
             @Override
@@ -39,8 +39,8 @@ public class AssignArt extends JFrame {
             }
         });
 
+        add(algorithm, BorderLayout.NORTH); // Přidání nového panelu s mřížkou do levého horního rohu okna
         add(box, BorderLayout.SOUTH);
-        add(algorithm, BorderLayout.CENTER);
 
         setVisible(true);
 
@@ -55,6 +55,9 @@ public class AssignArt extends JFrame {
         });
 
         timer.start();
+        if (box.isPressed()) {
+            timer.stop();
+        }
     }
 
     public boolean isPressed() {

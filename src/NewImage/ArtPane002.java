@@ -27,7 +27,7 @@ public class ArtPane002 extends JPanel {
         this.outputText = new ArrayList<>();
         this.labels = new Cell[rowsAndColumns][rowsAndColumns];
 
-        setLayout(new GridLayout(rowsAndColumns, rowsAndColumns, 0, 0));  // Nastavení rozvržení bez mezer
+        setLayout(null);  // Nastavení layoutu na null pro manuální rozložení
         setOpaque(true);
         setPreferredSize(new Dimension(800,800));
 
@@ -36,12 +36,19 @@ public class ArtPane002 extends JPanel {
             for (int j = 0; j < rowsAndColumns; j++) {
                 Cell cell = new Cell(colorOfLine);
                 cell.setType(TypesOfCells.BLANK);
-                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 labels[j][i] = cell;
                 add(cell);
                 cell.setStrtingPoint(false);
             }
         }
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                layoutCells();
+            }
+        });
 
         // Listener pro pohyb myší
         addMouseMotionListener(new MouseMotionAdapter() {
@@ -55,23 +62,15 @@ public class ArtPane002 extends JPanel {
                 if (canDraw) {
                     if (cellXold == (cellX - 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.RIGHT);
-                        labels[cellX][cellY].setX(cellX);
-                        labels[cellX][cellY].setY(cellY);
                         outputText.add("→");
                     } else if (cellXold == (cellX + 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
-                        labels[cellX][cellY].setX(cellX);
-                        labels[cellX][cellY].setY(cellY);
                         outputText.add("←");
                     } else if (cellYold == (cellY - 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.DOWN);
-                        labels[cellX][cellY].setX(cellX);
-                        labels[cellX][cellY].setY(cellY);
                         outputText.add("↓");
                     } else if (cellYold == (cellY + 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.UP);
-                        labels[cellX][cellY].setX(cellX);
-                        labels[cellX][cellY].setY(cellY);
                         outputText.add("↑");
                     }
                 }
@@ -89,19 +88,15 @@ public class ArtPane002 extends JPanel {
                 cellX = (e.getX() / (getWidth() / rowsAndColumns));
                 cellY = (e.getY() / (getHeight() / rowsAndColumns));
 
-                if (countOfClicks % 2 != 0) {
+                if (countOfClicks % 2 != 0 && countOfClicks < 3) {
                     startingCell = labels[cellX][cellY];
-                    startingCell.setStrtingPoint(true);
                     startingCell.setTypeOfCell(TypesOfCells.STARTINGPOINT);
                     canDraw = true;
                 } else {
                     endingCell = labels[cellX][cellY];
-                    endingCell.setStrtingPoint(false);
-                    endingCell.setTypeOfCell(TypesOfCells.BLANK);
+                    endingCell.setTypeOfCell(TypesOfCells.ENDINGPOINT);
                     canDraw = false;
                 }
-
-                repaint();
             }
         });
 
@@ -112,6 +107,19 @@ public class ArtPane002 extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawGrid(g);
+    }
+
+    private void layoutCells() {
+        int width = getWidth();
+        int height = getHeight();
+        int cellWidth = width / rowsAndColumns;
+        int cellHeight = height / rowsAndColumns;
+
+        for (int i = 0; i < rowsAndColumns; i++) {
+            for (int j = 0; j < rowsAndColumns; j++) {
+                labels[j][i].setBounds(j * cellWidth, i * cellHeight, cellWidth, cellHeight);
+            }
+        }
     }
 
     private void drawGrid(Graphics g) {

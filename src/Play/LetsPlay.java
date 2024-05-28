@@ -62,12 +62,12 @@ public class LetsPlay extends JFrame {
             }
         }
 
-        button = new JButton();
+        button = new JButton("Check");
         box = new SetUpBox(button);
         box.setTextString(task);
 
         add(box,BorderLayout.SOUTH);
-        add(pane,BorderLayout.CENTER);
+        add(pane,BorderLayout.NORTH);
         setVisible(true);
     }
 

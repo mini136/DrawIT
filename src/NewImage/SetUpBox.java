@@ -19,7 +19,7 @@ public class SetUpBox extends JPanel {
         setBackground(Color.white);
 
         textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(200, 200));
+        textArea.setPreferredSize(new Dimension(200, 150));
         textArea.setLineWrap(true);
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 20));
 
@@ -27,15 +27,12 @@ public class SetUpBox extends JPanel {
 
         this.button = button;
 
-        int arcWidth = 15; // šířka oblouku
-        int arcHeight = 15; // výška oblouku
-        Border roundedBorder = BorderFactory.createEmptyBorder(arcWidth, arcWidth,arcWidth,arcWidth);
-
-        button.setBorder(roundedBorder);
         button.setOpaque(true);
         button.setBackground(new Color(176, 87, 215));
+        button.setVisible(true);
+        button.setPreferredSize(new Dimension(200,50));
 
-        add(button, BorderLayout.CENTER);
+        add(button, BorderLayout.EAST);
 
         button.addActionListener(new ActionListener() {
             @Override
