@@ -26,11 +26,6 @@ public class AppMain extends JFrame {
         setLayout(new GridBagLayout());
         getContentPane().setBackground(Color.white);
         setIconImage(new ImageIcon("logos/drawItIcon.png").getImage());
-        try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            throw new RuntimeException(e);
-        }
 
         try {
             customFont = new Font("SansSerif", Font.BOLD, 35); // Zde můžete specifikovat jiný font, styl a velikost

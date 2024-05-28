@@ -10,7 +10,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class AssignArt extends JFrame {
-
     private boolean done;
     private ArrayList<String> zadani;
     private String name;
@@ -22,11 +21,7 @@ public class AssignArt extends JFrame {
         setSize(800, 1000);
         setResizable(false);
         setLayout(new BorderLayout());
-        try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            throw new RuntimeException(e);
-        }
+        getContentPane().setBackground(Color.black);
 
         button = new JButton("Save");
         box = new SetUpBox(button);
@@ -45,7 +40,7 @@ public class AssignArt extends JFrame {
         });
 
         add(box, BorderLayout.SOUTH);
-        add(algorithm, BorderLayout.CENTER); // Ensure ArtPane002 is added in the center
+        add(algorithm, BorderLayout.CENTER);
 
         setVisible(true);
 
@@ -64,10 +59,5 @@ public class AssignArt extends JFrame {
 
     public boolean isPressed() {
         return box.isPressed();
-    }
-
-    public static void main(String[] args) {
-        // Test the application
-        new AssignArt("testArt");
     }
 }

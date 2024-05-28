@@ -14,20 +14,16 @@ public class Cell extends JLabel implements Serializable {
 
     public Cell(Color colorOfLine) {
         setBackground(Color.white);
-        setOpaque(true);
         setColorOfLine(colorOfLine);
         setTypeOfCell(TypesOfCells.BLANK);
-        setBorder(BorderFactory.createLineBorder(Color.BLACK));
         setVisible(true);
     }
 
     public void setTypeOfCell(TypesOfCells typeOfCell) {
         if (typeOfCell == TypesOfCells.BLANK) {
-            setOpaque(true);
             setBackground(Color.white);
             setForeground(Color.black);
         } else {
-            setOpaque(true);
             setForeground(colorOfLine);
             setBackground(colorOfLine);
         }

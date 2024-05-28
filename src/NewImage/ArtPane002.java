@@ -9,7 +9,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class ArtPane002 extends JPanel {
-    private int rowsAndColumms = 20;
+    private int rowsAndColumns = 20;
     private Cell startingCell;
     private Cell endingCell;
     private ArrayList<String> outputText;
@@ -23,33 +23,34 @@ public class ArtPane002 extends JPanel {
     int countOfClicks = 0;
 
     public ArtPane002(Color color) {
-        setSize(new Dimension(800, 800)); // Set size of panel
-        setLayout(new GridLayout(rowsAndColumms, rowsAndColumms));
-        setBackground(Color.white); // Set background color of panel
-        setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        setOpaque(true);
-
-        this.outputText = new ArrayList<>(); // Output text for directions
         this.colorOfLine = color;
-        this.labels = new Cell[rowsAndColumms][rowsAndColumms];
+        this.outputText = new ArrayList<>();
+        this.labels = new Cell[rowsAndColumns][rowsAndColumns];
 
-        for (int i = 0; i < rowsAndColumms; i++) {
-            for (int n = 0; n < rowsAndColumms; n++) {
+        setLayout(new GridLayout(rowsAndColumns, rowsAndColumns, 0, 0));  // Nastavení rozvržení bez mezer
+        setOpaque(true);
+        setPreferredSize(new Dimension(800,800));
+
+        // Inicializace buněk
+        for (int i = 0; i < rowsAndColumns; i++) {
+            for (int j = 0; j < rowsAndColumns; j++) {
                 Cell cell = new Cell(colorOfLine);
                 cell.setType(TypesOfCells.BLANK);
-                labels[n][i] = cell;
+                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                labels[j][i] = cell;
                 add(cell);
                 cell.setStrtingPoint(false);
             }
         }
 
+        // Listener pro pohyb myší
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
 
-                cellX = (e.getX() / (getWidth() / rowsAndColumms));
-                cellY = (e.getY() / (getHeight() / rowsAndColumms));
+                cellX = (e.getX() / (getWidth() / rowsAndColumns));
+                cellY = (e.getY() / (getHeight() / rowsAndColumns));
 
                 if (canDraw) {
                     if (cellXold == (cellX - 1)) {
@@ -80,12 +81,13 @@ public class ArtPane002 extends JPanel {
             }
         });
 
+        // Listener pro kliknutí myší
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 countOfClicks++;
-                cellX = (e.getX() / (getWidth() / rowsAndColumms));
-                cellY = (e.getY() / (getHeight() / rowsAndColumms));
+                cellX = (e.getX() / (getWidth() / rowsAndColumns));
+                cellY = (e.getY() / (getHeight() / rowsAndColumns));
 
                 if (countOfClicks % 2 != 0) {
                     startingCell = labels[cellX][cellY];
@@ -106,6 +108,27 @@ public class ArtPane002 extends JPanel {
         setVisible(true);
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawGrid(g);
+    }
+
+    private void drawGrid(Graphics g) {
+        int width = getWidth();
+        int height = getHeight();
+        int cellWidth = width / rowsAndColumns;
+        int cellHeight = height / rowsAndColumns;
+
+        g.setColor(Color.BLACK);
+        for (int i = 0; i <= rowsAndColumns; i++) {
+            int x = i * cellWidth;
+            g.drawLine(x, 0, x, height);
+            int y = i * cellHeight;
+            g.drawLine(0, y, width, y);
+        }
+    }
+
     private void moveMouseToCenter() {
         try {
             Robot robot = new Robot();
@@ -120,12 +143,12 @@ public class ArtPane002 extends JPanel {
 
     //region getters and setters
 
-    public int getRowsAndColumms() {
-        return rowsAndColumms;
+    public int getRowsAndColumns() {
+        return rowsAndColumns;
     }
 
-    public void setRowsAndColumms(int rowsAndColumms) {
-        this.rowsAndColumms = rowsAndColumms;
+    public void setRowsAndColumns(int rowsAndColumns) {
+        this.rowsAndColumns = rowsAndColumns;
     }
 
     public Cell getStartingCell() {

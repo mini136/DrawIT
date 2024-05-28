@@ -19,7 +19,7 @@ public class SetUpBox extends JPanel {
         setBackground(Color.white);
 
         textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(200, 100));
+        textArea.setPreferredSize(new Dimension(200, 200));
         textArea.setLineWrap(true);
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 20));
 

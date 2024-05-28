@@ -56,7 +56,7 @@ public class LetsPlay extends JFrame {
 
                 if(cell.isStrtingPoint()){
                     startingCell = cell;
-                    pane.startingPoint(cell.getX(),cell.getY());
+                    pane.startingPoint(cell.getY(),cell.getX());
                 }
 
             }
