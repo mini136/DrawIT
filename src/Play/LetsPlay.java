@@ -41,17 +41,32 @@ public class LetsPlay extends JFrame {
         for (Cell[] row : labels) {
             for (Cell cell : row) {
                 switch(cell.getType()){
+                    case STARTINGPOINT:
+                        task.add("X");
+                        System.out.print("START.");
+                        break;
                     case UP:
                         task.add("↑");
+                        System.out.print("UP.");
                         break;
                     case DOWN:
                         task.add("↓");
+                        System.out.print("DOWN.");
                         break;
                     case LEFT:
                         task.add("←");
+                        System.out.print("LEFT.");
                         break;
                     case RIGHT:
                         task.add("→");
+                        System.out.print("RIGHT.");
+                        break;
+                    case ENDINGPOINT:
+                        task.add("X");
+                        System.out.print("END.");
+                        break;
+                    case BLANK:
+                        System.out.print("BLANK.");
                         break;
                     default:
                         break;
@@ -82,7 +97,7 @@ public class LetsPlay extends JFrame {
                 outerloop:
                 for (int k = 0;k < labels.length;k++) {
                     for (int l = 0; l < labels.length;l++) {
-                           if(labels[l][k] != playLabels[l][k]){
+                           if(labels[l][k].getType() != playLabels[l][k].getType()){
                                JOptionPane.showMessageDialog(null,"Wrong!","title",JOptionPane.ERROR_MESSAGE);
                                pressed = true;
                                ((Timer) d.getSource()).stop();

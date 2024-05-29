@@ -76,6 +76,8 @@ public class PlayArtPane extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 countOfClicks++;
                 if (countOfClicks % 2 != 0 && countOfClicks < 3) {
+                    startingCell = labels[cellX][cellY];
+                    startingCell.setTypeOfCell(TypesOfCells.STARTINGPOINT);
                     canDraw = true;
                 } else if (countOfClicks % 2 == 0 && countOfClicks < 3) {
                     canDraw = false;
@@ -129,11 +131,11 @@ public class PlayArtPane extends JPanel {
         // Získání umístění JPanelu na obrazovce
         Point panelLocation = getLocationOnScreen();
         // Nastavení souřadnic myši
-        int mouseX = panelLocation.x + x;
-        int mouseY = panelLocation.y + y;
+        int mouseX = panelLocation.x + x * 40;
+        int mouseY = panelLocation.y + y * 40;
         try {
             Robot robot = new Robot();
-            robot.mouseMove(x * 40,y * 40);
+            robot.mouseMove(mouseX,mouseY);
         } catch (AWTException e) {
             e.printStackTrace();
         }

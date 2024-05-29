@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class Cell extends JLabel implements Serializable {
 
     protected TypesOfCells type;
+    private static final long serialVersionUID = 1L;
     private Color colorOfLine;
     private int x;
     private int y;

@@ -60,10 +60,10 @@ public class ArtPane002 extends JPanel {
 
                 if (canDraw) {
                     if (cellXold == (cellX - 1)) {
-                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.RIGHT);
+                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
                         outputText.add("→");
                     } else if (cellXold == (cellX + 1)) {
-                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
+                        labels[cellX][cellY].setTypeOfCell(TypesOfCells.RIGHT);
                         outputText.add("←");
                     } else if (cellYold == (cellY - 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.DOWN);
