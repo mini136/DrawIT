@@ -35,9 +35,8 @@ public class PlayArtPane extends JPanel {
                 Cell cell = new Cell(colorOfLine);
                 cell.setType(TypesOfCells.BLANK);
                 labels[n][i] = cell;
+                cell.setBounds(n * (800 / rowsAndColumms), i * (800 / rowsAndColumms), 800 / rowsAndColumms, 800 / rowsAndColumms);
                 add(cell);
-                System.out.println(cell.toString());
-                cell.setStrtingPoint(false);
             }
         }
 
@@ -54,8 +53,6 @@ public class PlayArtPane extends JPanel {
             public void mouseMoved(MouseEvent e) {
                 cellX = (e.getX() / (getWidth() / rowsAndColumms));
                 cellY = (e.getY() / (getHeight() / rowsAndColumms));
-
-                System.out.println("Mouse Moved: " + cellX + ", " + cellY);
 
                 if (canDraw) {
                     if (cellXold == (cellX - 1)) {
@@ -78,9 +75,9 @@ public class PlayArtPane extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 countOfClicks++;
-                if(countOfClicks % 2 != 0 && countOfClicks < 3){
+                if (countOfClicks % 2 != 0 && countOfClicks < 3) {
                     canDraw = true;
-                } else if (countOfClicks % 2 == 0 && countOfClicks < 3){
+                } else if (countOfClicks % 2 == 0 && countOfClicks < 3) {
                     canDraw = false;
                 }
             }
@@ -95,7 +92,7 @@ public class PlayArtPane extends JPanel {
         drawGrid(g);
     }
 
-    private void drawGrid(Graphics g) {
+   private void drawGrid(Graphics g) {
         int width = getWidth();
         int height = getHeight();
         int cellWidth = width / rowsAndColumms;
@@ -124,11 +121,23 @@ public class PlayArtPane extends JPanel {
     }
 
     public void startingPoint(int x, int y) {
-        startingCell = new Cell(Color.RED);
-        startingCell.setOpaque(true);
-        startingCell.setBackground(Color.red);
-        startingCell.setForeground(Color.red);
-        labels[x][y] = startingCell;
+        labels[x][y].setTypeOfCell(TypesOfCells.STARTINGPOINT);
+        labels[x][y].setOpaque(true);
+        labels[x][y].setBackground(Color.RED); // Ensure the starting point is visible
+        labels[x][y].setForeground(Color.RED); // Ensure the starting point is visible
+        repaint(); // Repaint to reflect changes
+        // Získání umístění JPanelu na obrazovce
+        Point panelLocation = getLocationOnScreen();
+        // Nastavení souřadnic myši
+        int mouseX = panelLocation.x + x;
+        int mouseY = panelLocation.y + y;
+        try {
+            Robot robot = new Robot();
+            robot.mouseMove(x * 40,y * 40);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+
     }
 
     // region getters and setters

@@ -49,8 +49,8 @@ public class AssignArt extends JFrame {
             box.repaint();
 
             if (box.isPressed()) {
-                setVisible(false);
                 done = true;
+                dispose();
             }
         });
 

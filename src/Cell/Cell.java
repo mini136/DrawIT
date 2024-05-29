@@ -10,32 +10,35 @@ public class Cell extends JLabel implements Serializable {
     private Color colorOfLine;
     private int x;
     private int y;
-    private boolean isStrtingPoint;
+    private boolean isStartingPoint;
 
     public Cell(Color colorOfLine) {
         setBackground(Color.white);
         setColorOfLine(colorOfLine);
-        setTypeOfCell(TypesOfCells.BLANK);
+        setBorder(BorderFactory.createLineBorder(colorOfLine));
         setOpaque(true);
         setVisible(true);
     }
 
     public void setTypeOfCell(TypesOfCells typeOfCell) {
+        this.type = typeOfCell;
         if (typeOfCell == TypesOfCells.BLANK) {
             setBackground(Color.white);
             setForeground(Color.white);
-        } else if(typeOfCell == TypesOfCells.STARTINGPOINT){
-            setForeground(Color.red);
+        } else if (typeOfCell == TypesOfCells.STARTINGPOINT) {
+            setColorOfLine(Color.red);
             setBackground(Color.red);
-        } else if(typeOfCell == TypesOfCells.ENDINGPOINT){
-            setForeground(Color.blue);
+            setForeground(Color.red);
+        } else if (typeOfCell == TypesOfCells.ENDINGPOINT) {
+            setColorOfLine(Color.blue);
             setBackground(Color.blue);
+            setForeground(Color.blue);
         } else {
-            setForeground(colorOfLine);
             setBackground(colorOfLine);
+            setForeground(colorOfLine);
         }
-
-        setType(typeOfCell);
+        repaint(); // Repaint to reflect changes
+        setVisible(true);
     }
 
     public TypesOfCells getType() {
@@ -44,6 +47,7 @@ public class Cell extends JLabel implements Serializable {
 
     public void setType(TypesOfCells type) {
         this.type = type;
+        setTypeOfCell(type);
     }
 
     public Color getColorOfLine() {
@@ -64,12 +68,12 @@ public class Cell extends JLabel implements Serializable {
         return y;
     }
 
-    public boolean isStrtingPoint() {
-        return isStrtingPoint;
+    public boolean isStartingPoint() {
+        return isStartingPoint;
     }
 
-    public void setStrtingPoint(boolean strtingPoint) {
-        isStrtingPoint = strtingPoint;
+    public void setStartingPoint(boolean startingPoint) {
+        isStartingPoint = startingPoint;
     }
 
     public void setX(int x) {
@@ -87,7 +91,7 @@ public class Cell extends JLabel implements Serializable {
                 ", colorOfLine=" + colorOfLine +
                 ", x=" + x +
                 ", y=" + y +
-                ", isStrtingPoint=" + isStrtingPoint +
+                ", isStartingPoint=" + isStartingPoint +
                 '}';
     }
 }

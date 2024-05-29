@@ -20,10 +20,10 @@ public class LetsPlay extends JFrame {
     private PlayArtPane pane;
     private ArrayList<String> task;
     private Cell startingCell;
-    private boolean canDraw;
-    public LetsPlay(String filePath){
+    private boolean pressed;
 
-        setSize(800,1000);
+    public LetsPlay(String filePath) {
+        setSize(new Dimension(800, 1000));
         setResizable(false);
         setLayout(new BorderLayout());
 
@@ -36,9 +36,6 @@ public class LetsPlay extends JFrame {
             e.printStackTrace();
         }
 
-
-        //←,↑,→,↓
-
         int i = 0;
         int n = 0;
         for (Cell[] row : labels) {
@@ -46,23 +43,25 @@ public class LetsPlay extends JFrame {
                 switch(cell.getType()){
                     case UP:
                         task.add("↑");
+                        break;
                     case DOWN:
                         task.add("↓");
+                        break;
                     case LEFT:
                         task.add("←");
+                        break;
                     case RIGHT:
                         task.add("→");
+                        break;
                     default:
                         break;
-
+                }
+                if (cell.getType() == TypesOfCells.STARTINGPOINT) {
+                    startingCell = cell;
+                    startingCell.setX(n);
+                    startingCell.setY(i);
                 }
                 n++;
-
-                if(cell.getType() == TypesOfCells.STARTINGPOINT){
-                    startingCell = cell;
-                    pane.startingPoint(i,n);
-                }
-
             }
             n = 0;
             i++;
@@ -72,14 +71,36 @@ public class LetsPlay extends JFrame {
         box = new SetUpBox(button);
         box.setTextString(task);
 
-        add(box,BorderLayout.SOUTH);
-        add(pane,BorderLayout.NORTH);
+        add(box, BorderLayout.SOUTH);
+        add(pane, BorderLayout.CENTER);
         setVisible(true);
+
+        Timer timer = new Timer(100, d -> {
+            if(box.isPressed()) {
+                Cell[][] playLabels = pane.getLabels();
+
+                outerloop:
+                for (int k = 0;k < labels.length;k++) {
+                    for (int l = 0; l < labels.length;l++) {
+                           if(labels[l][k] != playLabels[l][k]){
+                               JOptionPane.showMessageDialog(null,"Wrong!","title",JOptionPane.ERROR_MESSAGE);
+                               pressed = true;
+                               ((Timer) d.getSource()).stop();
+                               break outerloop;
+                           }
+                    }
+                }
+                dispose();
+            }
+        });
+        timer.start();
+
+        if (startingCell != null) {
+            pane.startingPoint(startingCell.getX(), startingCell.getY());
+        }
     }
 
-    public boolean isPressed(){
-        return box.isPressed();
+    public boolean isPressed() {
+        return pressed;
     }
-
 }
-

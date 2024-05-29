@@ -124,10 +124,11 @@ public class AppMain extends JFrame {
                     ChooseFrame frame = new ChooseFrame();
                     Timer timer = new Timer(100, d -> {
                         if (frame.isPressed()) {
+                            setVisible(true);
                             ((Timer) d.getSource()).stop();
                         }
 
-                    });
+                     });
                     timer.start();
                 }
             }

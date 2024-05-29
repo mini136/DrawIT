@@ -38,7 +38,6 @@ public class ArtPane002 extends JPanel {
                 cell.setType(TypesOfCells.BLANK);
                 labels[j][i] = cell;
                 add(cell);
-                cell.setStrtingPoint(false);
             }
         }
 
