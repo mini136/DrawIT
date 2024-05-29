@@ -1,6 +1,7 @@
 package Play;
 
 import Cell.Cell;
+import Cell.TypesOfCells;
 import NewImage.SetUpBox;
 
 import javax.swing.*;
@@ -38,6 +39,8 @@ public class LetsPlay extends JFrame {
 
         //←,↑,→,↓
 
+        int i = 0;
+        int n = 0;
         for (Cell[] row : labels) {
             for (Cell cell : row) {
                 switch(cell.getType()){
@@ -53,13 +56,16 @@ public class LetsPlay extends JFrame {
                         break;
 
                 }
+                n++;
 
-                if(cell.isStrtingPoint()){
+                if(cell.getType() == TypesOfCells.STARTINGPOINT){
                     startingCell = cell;
-                    pane.startingPoint(cell.getY(),cell.getX());
+                    pane.startingPoint(i,n);
                 }
 
             }
+            n = 0;
+            i++;
         }
 
         button = new JButton("Check");

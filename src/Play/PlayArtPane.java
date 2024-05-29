@@ -78,7 +78,11 @@ public class PlayArtPane extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 countOfClicks++;
-                canDraw = countOfClicks % 2 != 0;
+                if(countOfClicks % 2 != 0 && countOfClicks < 3){
+                    canDraw = true;
+                } else if (countOfClicks % 2 == 0 && countOfClicks < 3){
+                    canDraw = false;
+                }
             }
         });
 
@@ -121,11 +125,10 @@ public class PlayArtPane extends JPanel {
 
     public void startingPoint(int x, int y) {
         startingCell = new Cell(Color.RED);
-        startingCell.setStrtingPoint(true);
-        startingCell.setX(x);
-        startingCell.setY(y);
+        startingCell.setOpaque(true);
+        startingCell.setBackground(Color.red);
+        startingCell.setForeground(Color.red);
         labels[x][y] = startingCell;
-        canDraw = true;
     }
 
     // region getters and setters
