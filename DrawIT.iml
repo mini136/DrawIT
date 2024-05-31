@@ -10,5 +10,6 @@
     <orderEntry type="library" name="eu.l.space.types_3" level="project" />
     <orderEntry type="library" name="jtattoo.JTattoo" level="project" />
     <orderEntry type="library" name="fasterxml.jackson.core.databind" level="project" />
+    <orderEntry type="library" name="bluecatcode.junit.4.10.extended" level="project" />
   </component>
 </module>

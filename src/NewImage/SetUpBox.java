@@ -45,7 +45,6 @@ public class SetUpBox extends JPanel {
     public void setTextString(ArrayList<String> arrayList){
         textArea.setText(arrayList.toString());
     }
-
     public boolean isPressed(){
         return buttonPressed;
     }

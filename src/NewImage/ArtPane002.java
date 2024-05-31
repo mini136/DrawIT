@@ -108,7 +108,7 @@ public class ArtPane002 extends JPanel {
         drawGrid(g);
     }
 
-    private void layoutCells() {
+    public void layoutCells() {
         int width = getWidth();
         int height = getHeight();
         int cellWidth = width / rowsAndColumns;
@@ -121,7 +121,7 @@ public class ArtPane002 extends JPanel {
         }
     }
 
-    private void drawGrid(Graphics g) {
+    public void drawGrid(Graphics g) {
         int width = getWidth();
         int height = getHeight();
         int cellWidth = width / rowsAndColumns;
@@ -136,7 +136,7 @@ public class ArtPane002 extends JPanel {
         }
     }
 
-    private void moveMouseToCenter() {
+    public void moveMouseToCenter() {
         try {
             Robot robot = new Robot();
             Point location = getLocationOnScreen();
