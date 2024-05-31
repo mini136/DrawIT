@@ -10,8 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class ArtPane002Test {
@@ -120,14 +118,13 @@ public class ArtPane002Test {
         testPanel.paint(g2d);
         g2d.dispose();
 
-        // Check some pixel to see if the grid was drawn (simple verification)
         int gridColor = Color.BLACK.getRGB();
         assertEquals(gridColor, image.getRGB(0, 0));
     }
 
     @Test
     public void testMoveMouseToCenter() {
-        // Creating the robot inside the test to avoid mocking
+
         try {
             Robot robot = new Robot();
             JFrame frame = new JFrame();

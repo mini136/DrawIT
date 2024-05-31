@@ -35,10 +35,10 @@ public class ChooseFrame extends JFrame {
         System.out.println(pictures.toString());
 
         try {
-            customFont = new Font("SansSerif", Font.BOLD, 50); // Zde můžete specifikovat jiný font, styl a velikost
+            customFont = new Font("SansSerif", Font.BOLD, 50);
         } catch (Exception e) {
             e.printStackTrace();
-            customFont = new Font("Arial", Font.PLAIN, 14); // Fallback na základní font, pokud vlastní font není nalezen
+            customFont = new Font("Arial", Font.PLAIN, 14);
         }
 
         for(int i = 0;i < pictures.length;i++ ){
@@ -92,13 +92,10 @@ public class ChooseFrame extends JFrame {
     public String[] listDirectoryNames(String path) {
         File parentDirectory = new File(path);
 
-        // Check if the path is a directory
         if (parentDirectory.isDirectory()) {
-            // Get all files and directories in the parent directory
             File[] files = parentDirectory.listFiles();
 
             if (files != null) {
-                // Count directories
                 int dirCount = 0;
                 for (File file : files) {
                     if (file.isDirectory()) {
@@ -106,7 +103,6 @@ public class ChooseFrame extends JFrame {
                     }
                 }
 
-                // Create an array for directory names
                 String[] directoryNames = new String[dirCount];
                 int index = 0;
                 for (File file : files) {
@@ -117,8 +113,10 @@ public class ChooseFrame extends JFrame {
                 return directoryNames;
             }
         }
-        return new String[0]; // Return an empty array if the path is not a directory or no directories found
+        return new String[0];
     }
+
+    //region gettters ans setters
 
     public String deleteSer(String fileName) {
             return fileName.substring(0, fileName.length() - 4);
@@ -131,5 +129,55 @@ public class ChooseFrame extends JFrame {
     public void setPressed(boolean pressed) {
         isPressed = pressed;
     }
+
+    public JScrollPane getPaneOfPictures() {
+        return paneOfPictures;
+    }
+
+    public void setPaneOfPictures(JScrollPane paneOfPictures) {
+        this.paneOfPictures = paneOfPictures;
+    }
+
+    public JPanel getButtons() {
+        return buttons;
+    }
+
+    public void setButtons(JPanel buttons) {
+        this.buttons = buttons;
+    }
+
+    public String[] getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(String[] pictures) {
+        this.pictures = pictures;
+    }
+
+    public File getDirectory() {
+        return directory;
+    }
+
+    public void setDirectory(File directory) {
+        this.directory = directory;
+    }
+
+    public Font getCustomFont() {
+        return customFont;
+    }
+
+    public void setCustomFont(Font customFont) {
+        this.customFont = customFont;
+    }
+
+    public Component[] getListOfButtons() {
+        return listOfButtons;
+    }
+
+    public void setListOfButtons(Component[] listOfButtons) {
+        this.listOfButtons = listOfButtons;
+    }
+
+    //endregion
 }
 

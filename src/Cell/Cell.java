@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
 
+/**
+ * Represents a cell in a grid, extending JLabel and implementing Serializable.
+ * it can have type,color and position x and y.
+ */
 public class Cell extends JLabel implements Serializable {
 
     protected TypesOfCells type;
@@ -13,6 +17,11 @@ public class Cell extends JLabel implements Serializable {
     private int y;
     private boolean isStartingPoint;
 
+    /**
+     * Constructs a new Cell with the color of its background and foreground.
+     *
+     * @param colorOfLine the color of the cells background.
+     */
     public Cell(Color colorOfLine) {
         setBackground(Color.white);
         setColorOfLine(colorOfLine);
@@ -21,6 +30,11 @@ public class Cell extends JLabel implements Serializable {
         setVisible(true);
     }
 
+    /**
+     * Sets the type of this cell and updates its Color - background and foreground.
+     *
+     * @param typeOfCell the type to set for this cell.
+     */
     public void setTypeOfCell(TypesOfCells typeOfCell) {
         this.type = typeOfCell;
         if (typeOfCell == TypesOfCells.BLANK) {
@@ -38,9 +52,11 @@ public class Cell extends JLabel implements Serializable {
             setBackground(colorOfLine);
             setForeground(colorOfLine);
         }
-        repaint(); // Repaint to reflect changes
+        repaint();
         setVisible(true);
     }
+
+    // region getters and setters
 
     public TypesOfCells getType() {
         return type;
@@ -64,9 +80,17 @@ public class Cell extends JLabel implements Serializable {
         return x;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     @Override
     public int getY() {
         return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public boolean isStartingPoint() {
@@ -77,13 +101,7 @@ public class Cell extends JLabel implements Serializable {
         isStartingPoint = startingPoint;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
+    // endregion
 
     @Override
     public String toString() {

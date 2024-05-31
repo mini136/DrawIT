@@ -121,7 +121,6 @@ public class LetsPlay extends JFrame {
                     }
                 }
 
-                // Porovnání buněk
                 outerloop:
                 for (int k = 0; k < labels.length; k++) {
                     for (int l = 0; l < labels.length; l++) {
@@ -157,7 +156,71 @@ public class LetsPlay extends JFrame {
         }
     }
 
+    //region getters and setters
+
+    public Cell[][] getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Cell[][] labels) {
+        this.labels = labels;
+    }
+
+    public SetUpBox getBox() {
+        return box;
+    }
+
+    public void setBox(SetUpBox box) {
+        this.box = box;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public JButton getButton() {
+        return button;
+    }
+
+    public void setButton(JButton button) {
+        this.button = button;
+    }
+
+    public PlayArtPane getPane() {
+        return pane;
+    }
+
+    public void setPane(PlayArtPane pane) {
+        this.pane = pane;
+    }
+
+    public ArrayList<String> getTask() {
+        return task;
+    }
+
+    public void setTask(ArrayList<String> task) {
+        this.task = task;
+    }
+
+    public Cell getStartingCell() {
+        return startingCell;
+    }
+
+    public void setStartingCell(Cell startingCell) {
+        this.startingCell = startingCell;
+    }
+
+    public void setPressed(boolean pressed) {
+        this.pressed = pressed;
+    }
+
     public boolean isPressed() {
         return pressed;
     }
+
+    //endregion
 }

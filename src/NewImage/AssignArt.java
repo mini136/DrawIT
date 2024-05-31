@@ -26,7 +26,7 @@ public class AssignArt extends JFrame {
 
         button = new JButton("Save");
         box = new SetUpBox(button);
-        ArtPane002 algorithm = new ArtPane002(Color.black);// Vytvoření nového panelu pro mřížku
+        ArtPane002 algorithm = new ArtPane002(Color.black);
 
         button.addActionListener(new ActionListener() {
             @Override
@@ -53,7 +53,7 @@ public class AssignArt extends JFrame {
             }
         });
 
-        add(algorithm, BorderLayout.NORTH); // Přidání nového panelu s mřížkou do levého horního rohu okna
+        add(algorithm, BorderLayout.NORTH);
         add(box, BorderLayout.SOUTH);
 
         setVisible(true);
@@ -74,7 +74,53 @@ public class AssignArt extends JFrame {
         }
     }
 
+    //region getters and setters
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public ArrayList<String> getZadani() {
+        return zadani;
+    }
+
+    public void setZadani(ArrayList<String> zadani) {
+        this.zadani = zadani;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public JButton getButton() {
+        return button;
+    }
+
+    public void setButton(JButton button) {
+        this.button = button;
+    }
+
+    public SetUpBox getBox() {
+        return box;
+    }
+
+    public void setBox(SetUpBox box) {
+        this.box = box;
+    }
+
     public boolean isPressed() {
         return box.isPressed();
     }
+
+    //endregion
 }

@@ -116,7 +116,7 @@ public class PlayArtPane extends JPanel {
         }
     }
 
-    private void layoutCells() {
+    void layoutCells() {
         int width = getWidth();
         int height = getHeight();
         int cellWidth = width / rowsAndColumms;

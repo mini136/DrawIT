@@ -42,6 +42,9 @@ public class SetUpBox extends JPanel {
         });
     }
 
+
+    //region getters and setters
+
     public void setTextString(ArrayList<String> arrayList){
         textArea.setText(arrayList.toString());
     }
@@ -49,4 +52,33 @@ public class SetUpBox extends JPanel {
         return buttonPressed;
     }
 
+    public String getTextFromTextArea(){
+        return textArea.getText();
+    }
+
+    public JTextArea getTextArea() {
+        return textArea;
+    }
+
+    public void setTextArea(JTextArea textArea) {
+        this.textArea = textArea;
+    }
+
+    public JButton getButton() {
+        return button;
+    }
+
+    public void setButton(JButton button) {
+        this.button = button;
+    }
+
+    public boolean isButtonPressed() {
+        return buttonPressed;
+    }
+
+    public void setButtonPressed(boolean buttonPressed) {
+        this.buttonPressed = buttonPressed;
+    }
+
+    //endregion
 }

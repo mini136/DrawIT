@@ -27,11 +27,10 @@ public class ArtPane002 extends JPanel {
         this.outputText = new ArrayList<>();
         this.labels = new Cell[rowsAndColumns][rowsAndColumns];
 
-        setLayout(null);  // Nastavení layoutu na null pro manuální rozložení
+        setLayout(null);
         setOpaque(true);
         setPreferredSize(new Dimension(800,800));
 
-        // Inicializace buněk
         for (int i = 0; i < rowsAndColumns; i++) {
             for (int j = 0; j < rowsAndColumns; j++) {
                 Cell cell = new Cell(colorOfLine);
@@ -49,7 +48,6 @@ public class ArtPane002 extends JPanel {
             }
         });
 
-        // Listener pro pohyb myší
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -79,7 +77,6 @@ public class ArtPane002 extends JPanel {
             }
         });
 
-        // Listener pro kliknutí myší
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
