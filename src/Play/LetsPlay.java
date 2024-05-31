@@ -28,10 +28,15 @@ public class LetsPlay extends JFrame {
         setLayout(new BorderLayout());
 
         this.pane = new PlayArtPane(Color.BLACK);
-        this.task = new ArrayList<>();
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("pictures/" + filePath + "/" + filePath + ".ser"))) {
             this.labels = (Cell[][]) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("pictures/" + filePath + "/" + filePath + "Txt.ser"))) {
+            this.task = (ArrayList<String>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -40,33 +45,24 @@ public class LetsPlay extends JFrame {
         int n = 0;
         for (Cell[] row : labels) {
             for (Cell cell : row) {
-                switch(cell.getType()){
+                switch (cell.getType()) {
                     case STARTINGPOINT:
-                        task.add("X");
                         System.out.print("START.");
                         break;
                     case UP:
-                        task.add("↑");
                         System.out.print("UP.");
                         break;
                     case DOWN:
-                        task.add("↓");
                         System.out.print("DOWN.");
                         break;
                     case LEFT:
-                        task.add("←");
                         System.out.print("LEFT.");
                         break;
                     case RIGHT:
-                        task.add("→");
                         System.out.print("RIGHT.");
                         break;
                     case ENDINGPOINT:
-                        task.add("X");
                         System.out.print("END.");
-                        break;
-                    case BLANK:
-                        System.out.print("BLANK.");
                         break;
                     default:
                         break;
@@ -91,20 +87,66 @@ public class LetsPlay extends JFrame {
         setVisible(true);
 
         Timer timer = new Timer(100, d -> {
-            if(box.isPressed()) {
+            if (box.isPressed()) {
                 Cell[][] playLabels = pane.getLabels();
 
-                outerloop:
-                for (int k = 0;k < labels.length;k++) {
-                    for (int l = 0; l < labels.length;l++) {
-                           if(labels[l][k].getType() != playLabels[l][k].getType()){
-                               JOptionPane.showMessageDialog(null,"Wrong!","title",JOptionPane.ERROR_MESSAGE);
-                               pressed = true;
-                               ((Timer) d.getSource()).stop();
-                               break outerloop;
-                           }
+                // Vypisování typů buněk kromě BLANK
+                System.out.println("Current play labels:");
+                for (Cell[] row : playLabels) {
+                    for (Cell cell : row) {
+                        if (cell.getType() != TypesOfCells.BLANK) {
+                            switch (cell.getType()) {
+                                case STARTINGPOINT:
+                                    System.out.print("START.");
+                                    break;
+                                case UP:
+                                    System.out.print("UP.");
+                                    break;
+                                case DOWN:
+                                    System.out.print("DOWN.");
+                                    break;
+                                case LEFT:
+                                    System.out.print("LEFT.");
+                                    break;
+                                case RIGHT:
+                                    System.out.print("RIGHT.");
+                                    break;
+                                case ENDINGPOINT:
+                                    System.out.print("END.");
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     }
                 }
+
+                // Porovnání buněk
+                outerloop:
+                for (int k = 0; k < labels.length; k++) {
+                    for (int l = 0; l < labels.length; l++) {
+                        if (playLabels[l][k].getType() != TypesOfCells.BLANK) {
+                            switch (playLabels[l][k].getType()) {
+                                case ENDINGPOINT:
+                                case STARTINGPOINT:
+                                    break;
+                                case UP:
+                                case DOWN:
+                                case LEFT:
+                                case RIGHT:
+                                    if (playLabels[l][k].getType() != labels[l][k].getType()) {
+                                        JOptionPane.showMessageDialog(null, "Wrong!", "title", JOptionPane.ERROR_MESSAGE);
+                                        pressed = true;
+                                        break outerloop;
+                                    }
+                            }
+                        }
+                    }
+                }
+
+                JOptionPane.showConfirmDialog(null,"You Won","Wining message",JOptionPane.OK_OPTION);
+
+                ((Timer) d.getSource()).stop();
                 dispose();
             }
         });

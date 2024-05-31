@@ -16,7 +16,7 @@ public class ChooseFrame extends JFrame {
 
     private JScrollPane paneOfPictures;
     private JPanel buttons;
-    private File[] pictures;
+    private String[] pictures;
     private File directory;
     private Font customFont;
     private Component[] listOfButtons;
@@ -28,11 +28,11 @@ public class ChooseFrame extends JFrame {
         setBackground(Color.white);
 
         paneOfPictures = new JScrollPane();
-        directory = new File("pictures");
-        pictures = directory.listFiles();
+        pictures = listDirectoryNames("pictures/");
         listOfButtons = new Component[pictures.length];
         buttons = new JPanel();
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
+        System.out.println(pictures.toString());
 
         try {
             customFont = new Font("SansSerif", Font.BOLD, 50); // Zde můžete specifikovat jiný font, styl a velikost
@@ -46,7 +46,8 @@ public class ChooseFrame extends JFrame {
             button.setOpaque(true);
             button.setBackground(new Color(176, 87, 215));
             button.setForeground(Color.white);
-            button.setText(deleteSer(pictures[i].getName()));
+            button.setText(pictures[i]);
+            System.out.println("jmeno " + pictures[i]);
             button.setPreferredSize(new Dimension(1050, 100));
             button.setMaximumSize(new Dimension(1050, 100));
             button.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -56,17 +57,9 @@ public class ChooseFrame extends JFrame {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String file = button.getText() + ".ser";
-                    int indexOfButton = 0;
-
-                    for(int i = 0; i < pictures.length;i++){
-                        if(pictures[i].equals(file)){
-                            indexOfButton = i;
-                            break;
-                        }
-                    }
+                    String file = button.getText();
                     setVisible(false);
-                    LetsPlay play = new LetsPlay(pictures[indexOfButton].getPath());
+                    LetsPlay play = new LetsPlay(file);
                     Timer timer = new Timer(100, d -> {
                         isPressed = play.isPressed();
                     });
@@ -77,7 +70,7 @@ public class ChooseFrame extends JFrame {
 
             buttons.add(button);
             listOfButtons[i] = button;
-            System.out.println(pictures[i].getName());
+            System.out.println(pictures[i]);
         }
         paneOfPictures.setViewportView(buttons);
 
@@ -94,6 +87,37 @@ public class ChooseFrame extends JFrame {
             e.printStackTrace();
         }
             return null;
+    }
+
+    public String[] listDirectoryNames(String path) {
+        File parentDirectory = new File(path);
+
+        // Check if the path is a directory
+        if (parentDirectory.isDirectory()) {
+            // Get all files and directories in the parent directory
+            File[] files = parentDirectory.listFiles();
+
+            if (files != null) {
+                // Count directories
+                int dirCount = 0;
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        dirCount++;
+                    }
+                }
+
+                // Create an array for directory names
+                String[] directoryNames = new String[dirCount];
+                int index = 0;
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        directoryNames[index++] = file.getName();
+                    }
+                }
+                return directoryNames;
+            }
+        }
+        return new String[0]; // Return an empty array if the path is not a directory or no directories found
     }
 
     public String deleteSer(String fileName) {

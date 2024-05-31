@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -30,11 +31,24 @@ public class AssignArt extends JFrame {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("pictures/" + name + ".ser"))) {
-                    oos.writeObject(algorithm.getLabels());
-                    System.out.println("Data were saved successfully.");
-                } catch (IOException s) {
-                    s.printStackTrace();
+
+                File newDirectory = new File("pictures/" + name);
+                boolean mkdir = newDirectory.mkdir();
+                if(mkdir) {
+                    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("pictures/" + name + "/" + name + ".ser"))) {
+                        oos.writeObject(algorithm.getLabels());
+                        System.out.println("Data were saved successfully.");
+                    } catch (IOException s) {
+                        s.printStackTrace();
+                    }
+                    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("pictures/" + name + "/" + name + "Txt.ser"))) {
+                        oos.writeObject(algorithm.getOutputText());
+                        System.out.println("Data were saved successfully.");
+                    } catch (IOException s) {
+                        s.printStackTrace();
+                    }
+                } else {
+                    System.out.println("slozka se nevitvorila");
                 }
             }
         });

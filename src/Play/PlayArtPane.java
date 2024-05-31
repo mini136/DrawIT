@@ -19,10 +19,10 @@ public class PlayArtPane extends JPanel {
     private Cell[][] labels;
     private boolean canDraw;
     private Color colorOfLine;
-    int countOfClicks = 0;
+    private boolean isDrawingStarted = false;
 
     public PlayArtPane(Color color) {
-        setPreferredSize(new Dimension(800, 800)); // Use setPreferredSize instead of setSize
+        setPreferredSize(new Dimension(800, 800));
         setLayout(null);
         setOpaque(true);
 
@@ -57,12 +57,16 @@ public class PlayArtPane extends JPanel {
                 if (canDraw) {
                     if (cellXold == (cellX - 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.RIGHT);
+                        outputText.add("→");
                     } else if (cellXold == (cellX + 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.LEFT);
+                        outputText.add("←");
                     } else if (cellYold == (cellY - 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.DOWN);
+                        outputText.add("↓");
                     } else if (cellYold == (cellY + 1)) {
                         labels[cellX][cellY].setTypeOfCell(TypesOfCells.UP);
+                        outputText.add("↑");
                     }
                 }
 
@@ -74,12 +78,15 @@ public class PlayArtPane extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                countOfClicks++;
-                if (countOfClicks % 2 != 0 && countOfClicks < 3) {
+                if (!isDrawingStarted) {
                     startingCell = labels[cellX][cellY];
                     startingCell.setTypeOfCell(TypesOfCells.STARTINGPOINT);
+                    outputText.add("START");
                     canDraw = true;
-                } else if (countOfClicks % 2 == 0 && countOfClicks < 3) {
+                    isDrawingStarted = true;
+                } else if (isDrawingStarted && canDraw) {
+                    labels[cellX][cellY].setTypeOfCell(TypesOfCells.STARTINGPOINT);
+                    outputText.add("START");
                     canDraw = false;
                 }
             }
@@ -94,7 +101,7 @@ public class PlayArtPane extends JPanel {
         drawGrid(g);
     }
 
-   private void drawGrid(Graphics g) {
+    private void drawGrid(Graphics g) {
         int width = getWidth();
         int height = getHeight();
         int cellWidth = width / rowsAndColumms;
@@ -125,21 +132,20 @@ public class PlayArtPane extends JPanel {
     public void startingPoint(int x, int y) {
         labels[x][y].setTypeOfCell(TypesOfCells.STARTINGPOINT);
         labels[x][y].setOpaque(true);
-        labels[x][y].setBackground(Color.RED); // Ensure the starting point is visible
-        labels[x][y].setForeground(Color.RED); // Ensure the starting point is visible
-        repaint(); // Repaint to reflect changes
-        // Získání umístění JPanelu na obrazovce
+        labels[x][y].setBackground(Color.RED);
+        labels[x][y].setForeground(Color.RED);
+        repaint();
+
         Point panelLocation = getLocationOnScreen();
-        // Nastavení souřadnic myši
-        int mouseX = panelLocation.x + x * 40;
-        int mouseY = panelLocation.y + y * 40;
+        int mouseY = panelLocation.x + x * (getWidth() / rowsAndColumms) + (getWidth() / rowsAndColumms) / 2;
+        int mouseX = panelLocation.y + y * (getHeight() / rowsAndColumms) + (getHeight() / rowsAndColumms) / 2;
+
         try {
             Robot robot = new Robot();
-            robot.mouseMove(mouseX,mouseY);
+            robot.mouseMove(mouseX, mouseY);
         } catch (AWTException e) {
             e.printStackTrace();
         }
-
     }
 
     // region getters and setters
