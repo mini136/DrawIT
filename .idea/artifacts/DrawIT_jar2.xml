@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="DrawIT:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/DrawIT_jar</output-path>
+  <artifact type="jar" build-on-make="true" name="DrawIT:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/DrawIT_jar2</output-path>
     <root id="archive" name="DrawIT.jar">
       <element id="module-output" name="DrawIT" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/bluecatcode/junit/junit-4.10-extended/1.0.4/junit-4.10-extended-1.0.4.jar" path-in-jar="/" />
@@ -13,6 +13,7 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.13.3/jackson-databind-2.13.3.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.13.3/jackson-annotations-2.13.3.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.13.3/jackson-core-2.13.3.jar" path-in-jar="/" />
+      <element id="dir-copy" path="$PROJECT_DIR$/logos" />
     </root>
   </artifact>
 </component>
